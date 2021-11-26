@@ -1,0 +1,26 @@
+get the infos from stdin :
+	infile - cmd1 - cmd2 - outfile
+
+use execve to launch shell cmd
+	since it will start a new process, will have to use wait/waitpid in order to catch the return value
+	i guess ?
+execve closes the calling program
+it would be wiser to use fork instead i think ?
+
+so fork -> call cmd
+
+after any error, call perror()
+
+1- parse args
+2- pipe
+3- fork program
+	1- execve cmd1
+3.5- waitpid of child
+4- use pipe[1] to store return of child execve
+5- fork program
+	1- execve cmd2
+5.5- waitpid of child
+5- use pipe[1] to store return of child execve
+6- store pipe[1] in outfile
+
+test tricky : < /dev/stdin cat | ls > /dev/stdout
