@@ -11,8 +11,10 @@ endif
 SRCS_DIR = $(shell find Srcs -type d)
 OBJS_DIR = Objs
 INC_DIR = ./Includes/
+LIBFT_DIR = ./Libs/libft_duck
 
-INCLUDES = -I$(INC_DIR)
+LIBS = -L$(LIBFT_DIR) -lft
+INCLUDES = -I$(LIBFT_DIR)/Includes -I$(INC_DIR)
 
 vpath %.c $(foreach dir, $(SRCS_DIR), $(dir):)
 
@@ -20,14 +22,17 @@ SRCS = main.c
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
 
-all: $(NAME)
+all: $(LIBFT_DIR)/libft.a $(NAME)
+
+$(LIBFT_DIR)/libft.a:
+	make -C $(LIBFT_DIR) all
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $^ -o $@
 
 $(OBJS_DIR)/%.o: %.c
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ $(LIBS)
 
 re: fclean all
 
@@ -36,5 +41,8 @@ clean:
 
 fclean: clean
 	rm -rf $(NAME)
+
+cleanall: fclean
+	make -C $(LIBFT_DIR) fclean
 
 .PHONY : fclean clean re all
