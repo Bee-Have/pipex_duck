@@ -28,11 +28,11 @@ $(LIBFT_DIR)/libft.a:
 	make -C $(LIBFT_DIR) all
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 
 $(OBJS_DIR)/%.o: %.c
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 re: fclean all
 
