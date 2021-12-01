@@ -1,3 +1,6 @@
 [submodule "Libs/libft_duck"]
 	path = Libs/libft_duck
 	url = git@github.com:Bee-Have/libft_duck.git
+[submodule "Libs/Lib_get_file"]
+	path = Libs/Lib_get_file
+	url = git@github.com:Bee-Have/Lib_get_file.git

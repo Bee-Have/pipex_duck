@@ -1,0 +1,11 @@
+
+use dup2
+(dup just replace a specific fd, but you can't choose a specific new fd to assign)
+
+basically :
+	- replace stdin of child by infile
+	- replace stdout of parent to outfile
+
+when though ? 
+and what about pipe ?
+what do we use that for in the end ?
