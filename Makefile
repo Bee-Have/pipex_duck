@@ -18,7 +18,7 @@ INCLUDES = -I$(LIBFT_DIR)/Includes -I$(INC_DIR)
 
 vpath %.c $(foreach dir, $(SRCS_DIR), $(dir):)
 
-SRCS = main.c
+SRCS = main.c make_args_execve.c
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
 

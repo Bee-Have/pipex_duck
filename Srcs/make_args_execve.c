@@ -1,41 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   make_args_execve.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/30 15:14:53 by user42            #+#    #+#             */
-/*   Updated: 2021/12/01 15:40:52 by amarini-         ###   ########.fr       */
+/*   Created: 2021/12/01 15:13:36 by amarini-          #+#    #+#             */
+/*   Updated: 2021/12/01 15:35:01 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int ac, char **av, char *env[])
+char	**get_cmd_args(char *cmd)
 {
-	int		i;
-	char	**cmd_arg;
-	int		return_child;
-	pid_t	id;
+	char	*path;
+	char	**args;
 
-	i = 2;
-	printf("ac-[%d]\n", ac);
-	while (i < ac)
-	{
-		id = fork();
-		if (id == 0)
-		{
-			printf("child\n");
-			cmd_arg = get_cmd_args(av[i]);
-			execve(cmd_arg[0], cmd_arg, env);
-			exit(1);
-		}
-		else
-		{
-			waitpid(id, &return_child, WUNTRACED);
-			printf("parent-[%d][%d]\n", id, return_child);
-			++i;
-		}
-	}
+	if (!cmd)
+		return (NULL);
+	args = ft_split(cmd, ' ');
+	path = ft_strjoin("/bin/", args[0]);
+	free(args[0]);
+	args[0] = path;
+	return (args);
 }

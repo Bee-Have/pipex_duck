@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2021/11/30 15:57:51 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/01 15:31:00 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include "libft.h"
 
-int		main(int ac, char **av);
+int		main(int ac, char **av, char *env[]);
+char	**get_cmd_args(char *cmd);
 
 #endif
