@@ -25,11 +25,6 @@ after any error, call perror()
 
 test tricky : < /dev/stdin cat | ls > /dev/stdout
 
-
-feed execve :
-	- path to cmd "./path"
-	- (char **) which contains the args for the command sent
-
 parse (char **)envp for "PATH=" :
 	- for each line found with "PATH=" :
 		- split with ':' = env[]:
