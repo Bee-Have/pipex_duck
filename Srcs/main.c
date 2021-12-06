@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:14:53 by user42            #+#    #+#             */
-/*   Updated: 2021/12/06 17:41:53 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/06 18:15:19 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ int	main(int ac, char **av, char *env[])
 	char	**cmd_arg;
 	char	*test = NULL;
 	char	*cmd;
-	int		gnl_ret = 0;
 	int		return_child;
 	int		pipefd[2];
 	pid_t	*id;
-	// pid_t	id[2];
 
 	i = 2;
 	i_id = 0;
@@ -39,7 +37,6 @@ int	main(int ac, char **av, char *env[])
 	}
 	i_id = 0;
 	return_child = 0;
-	printf("ac-[%d]\n", ac);
 	pipe(pipefd);
 	while (i < (ac - 1))
 	{
@@ -56,27 +53,22 @@ int	main(int ac, char **av, char *env[])
 			execve(cmd_arg[0], cmd_arg, env);
 			exit(1);
 		}
-		// else
-		// {
-		// }
 		++i;
 		++i_id;
 	}
-	i = 2;
 	i_id = 0;
-	while (i < ac)
+	close(pipefd[1]);
+	while (i_id < id_len)
 	{
 		waitpid(id[i_id], &return_child, WUNTRACED);
-		close(pipefd[1]);
-		gnl_ret = get_next_line(pipefd[0], &test);
-		print`f("gnl-[%d]\n", gnl_ret);
+		// waitpid(0, &return_child, WUNTRACED);
+		get_next_line(pipefd[0], &test);
 		printf("return-[%s]\n", test);
 		free(test);
-		printf("id-[%d][%d]\n", id[i_id], return_child);
-		++i;
 		++i_id;
 	}
 	close(pipefd[0]);
+	free(id);
 }
 
 char	**get_cmd_args(char *cmd)
