@@ -2,10 +2,14 @@
 use dup2
 (dup just replace a specific fd, but you can't choose a specific new fd to assign)
 
-basically :
-	- replace stdin of child by infile
-	- replace stdout of parent to outfile
+for each child created, stdout will be replaced by pipefd[1] with dup2
 
-when though ? 
-and what about pipe ?
-what do we use that for in the end ?
+for the parent, stdout will be replaced by the outfile
+
+
+first child, stdin -> infile
+first child, stdout -> pipefd[1](write)
+other child, stdin -> pipefd[0](read)
+other child, stdout -> pipefd[1](write)
+last child, stdin -> pipefd[0](read)
+last child, stdout -> outfile

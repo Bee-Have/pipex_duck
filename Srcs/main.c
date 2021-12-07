@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:14:53 by user42            #+#    #+#             */
-/*   Updated: 2021/12/06 18:15:19 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/07 13:49:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@ int	main(int ac, char **av, char *env[])
 {
 	int		i;
 	int		i_id;
+	int		infile;
+	int		outfile;
 	int		id_len;
 	char	**cmd_arg;
-	char	*test = NULL;
-	char	*cmd;
 	int		return_child;
 	int		pipefd[2];
 	pid_t	*id;
 
 	i = 2;
+	infile = open(av[1], O_RDONLY);
+	outfile = open(av[ac - 1], O_RDWR);
 	i_id = 0;
 	id_len = ac - 3;
 	id = (pid_t *)malloc(id_len * sizeof(pid_t));
@@ -43,13 +45,27 @@ int	main(int ac, char **av, char *env[])
 		id[i_id] = fork();
 		if (id[i_id] == 0)
 		{
+			printf("n.%d\n", i_id);
+			if (i_id == 0)
+			{
+				printf("first child\n");
+				dup2(infile, 0);
+				dup2(pipefd[1], 1);
+			}
+			else if (i_id == (id_len - 1))
+			{
+				printf("last child\n");
+				dup2(pipefd[0], 0);
+				dup2(outfile, 1);
+			}
+			else
+			{
+				printf("middle child\n");
+				dup2(pipefd[0], 0);
+				dup2(pipefd[1], 1);
+			}
 			cmd_arg = get_cmd_args(av[i]);
-			printf("cmd-[%s]\n", cmd_arg[0]);
 			close(pipefd[0]);
-			cmd = ft_strjoin(cmd_arg[0], "\n");
-			write(pipefd[1], cmd, ft_strlen(cmd) + 1);
-			free(cmd);
-			close(pipefd[1]);
 			execve(cmd_arg[0], cmd_arg, env);
 			exit(1);
 		}
@@ -61,13 +77,11 @@ int	main(int ac, char **av, char *env[])
 	while (i_id < id_len)
 	{
 		waitpid(id[i_id], &return_child, WUNTRACED);
-		// waitpid(0, &return_child, WUNTRACED);
-		get_next_line(pipefd[0], &test);
-		printf("return-[%s]\n", test);
-		free(test);
 		++i_id;
 	}
 	close(pipefd[0]);
+	close(infile);
+	close(outfile);
 	free(id);
 }
 
