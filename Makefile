@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 DEBUG =
 ifdef DEBUG
-CFLAGS += -fsanitize=address -g -g3
+CFLAGS += -fsanitize=address -g -g3 -O0
 endif
 
 SRCS_DIR = $(shell find Srcs -type d)
@@ -19,7 +19,7 @@ INCLUDES = -I$(LIBFT_DIR)/Includes -I$(LIBGNL_DIR)/Includes -I$(INC_DIR)
 
 vpath %.c $(foreach dir, $(SRCS_DIR), $(dir):)
 
-SRCS = main.c
+SRCS = main_test.c
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
 

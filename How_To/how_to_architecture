@@ -1,0 +1,25 @@
+
+main
+parsing args :
+	- check if all args are here
+	- check if no arg before infile
+	- check if no arg after outfile
+	- check if infile/outfile path exists
+	NOPE- check if path cmd exists
+calculate number of cmds
+malloc (pid_t *id) (number of cmds)
+open infile/outfile
+pipe
+fork (number of cmds)
+	- dup2 depending on which child
+	- create (char **) for cmd args
+		- split av[x]
+		- (look at how_to_basic for this, not sure)
+	- close pipefd[0]
+	- execve
+	- exit (just in case)
+close pipefd[1]
+waitpid (number of cmds)
+close pipefd[0]
+close infile/outfile
+free(pid_t *id)
