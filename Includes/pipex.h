@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2021/12/08 18:24:02 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/13 16:33:05 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,8 @@
 
 int		main(int ac, char **av, char *env[]);
 char	**get_cmd_args(char *cmd);
+
+int		parsing_args(int ac, char **av);
+
 
 #endif
