@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:14:53 by user42            #+#    #+#             */
-/*   Updated: 2021/12/13 16:17:03 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/16 14:53:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,18 +83,4 @@ int	main(int ac, char **av, char *env[])
 	close(infile);
 	close(outfile);
 	free(id);
-}
-
-char	**get_cmd_args(char *cmd)
-{
-	char	*path;
-	char	**args;
-
-	if (!cmd)
-		return (NULL);
-	args = ft_split(cmd, ' ');
-	path = ft_strjoin("/bin/", args[0]);
-	free(args[0]);
-	args[0] = path;
-	return (args);
 }

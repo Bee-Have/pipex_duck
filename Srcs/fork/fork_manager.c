@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 17:10:17 by user42            #+#    #+#             */
-/*   Updated: 2021/12/13 17:24:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/16 18:42:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	fork_cmds(int files[2], char **cmds, char *env[])
 	int		cmd_len;
 	int		pipefd[2];
 	pid_t	*children;
+	char	**cmd_args;
 
 	i = 0;
 	//init pid_t
@@ -35,6 +36,16 @@ void	fork_cmds(int files[2], char **cmds, char *env[])
 		if (children[i] == 0)
 		{
 			//dup2 thing
+			dup2_children(cmd_len, i, pipefd, files);
+			//make cmd args
+			cmd_args = get_cmd_args(cmds[i]);
+			close(pipefd[0]);
+			//do the env access thing
+			//execve
+			if (check_cmd_env(*cmd_args[0], env) == PATH_OK)
+				execve(cmd_args[0], cmd_args, env);
+			else
+				return ;
 		}
 		++i;
 	}
