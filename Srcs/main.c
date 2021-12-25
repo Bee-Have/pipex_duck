@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:02:36 by user42            #+#    #+#             */
-/*   Updated: 2021/12/16 18:43:19 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/25 19:36:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int ac, char **av, char *env[])
 	i = 0;
 	//open fd infile/outfile
 	files[0] = open(av[1], O_RDONLY);
-	files[1] = open(av[ac - 1], O_RDWR);
+	files[1] = open(av[ac], O_RDWR);
 	//create new 'av' with just cmds
 	cmds = (char **)malloc(((ac - 3) + 1) * sizeof(char *));
 	if (!cmds)
@@ -37,6 +37,10 @@ int	main(int ac, char **av, char *env[])
 		cmds[i] = ft_strdup(av[i + 2]);
 		++i;
 	}
+	ft_print_tab(cmds);
 	//function call for fork
+	fork_cmds(files, cmds, env);
+	close(files[0]);
+	close(files[1]);
 	return (EXIT_SUCCESS);
 }

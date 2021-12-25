@@ -19,7 +19,12 @@ INCLUDES = -I$(LIBFT_DIR)/Includes -I$(LIBGNL_DIR)/Includes -I$(INC_DIR)
 
 vpath %.c $(foreach dir, $(SRCS_DIR), $(dir):)
 
-SRCS = main_test.c
+SRCS = print_error.c \
+	args_managment.c fork_manager.c \
+	parsing_manager.c \
+	main.c
+
+# SRCS = main_test.c
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
 

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 17:10:17 by user42            #+#    #+#             */
-/*   Updated: 2021/12/16 18:42:56 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/25 19:49:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,64 +14,72 @@
 
 //send : infile/outfile-(int[2]) av env 
 //Other function for fork
-void	fork_cmds(int files[2], char **cmds, char *env[])
+int	fork_cmds(int files[2], char **cmds, char *env[])
 {
 	int		i;
-	int		cmd_len;
 	int		pipefd[2];
 	pid_t	*children;
 	char	**cmd_args;
 
 	i = 0;
-	//init pid_t
-	cmd_len = ft_tablen(cmds);
-	children = (pid_t *)malloc(cmd_len * sizeof(pid_t));
+	children = (pid_t *)malloc(ft_tablen((const char **)cmds) * sizeof(pid_t));
 	if (!children)
 		return (EXIT_FAILURE);
-	//pipe
 	pipe(pipefd);
-	while (i < cmd_len)
+	while (i < ft_tablen((const char **)cmds))
 	{
 		children[i] = fork();
 		if (children[i] == 0)
 		{
-			//dup2 thing
-			dup2_children(cmd_len, i, pipefd, files);
-			//make cmd args
+			dup2_children(ft_tablen((const char **)cmds), i, pipefd, files);
 			cmd_args = get_cmd_args(cmds[i]);
 			close(pipefd[0]);
-			//do the env access thing
-			//execve
-			if (check_cmd_env(*cmd_args[0], env) == PATH_OK)
+			if (check_cmd_env(&cmd_args[0], env) == PATH_OK)
 				execve(cmd_args[0], cmd_args, env);
 			else
-				return ;
+				return (EXIT_FAILURE);
 		}
 		++i;
 	}
+	wait_for_children(/*children, */ft_tablen((const char **)cmds));
+	return (EXIT_SUCCESS);
+}
+
+void	wait_for_children(/*pid_t *children,*/ int size)
+{
+	int		i;
+	int		ret_child;
+
+	i = 0;
+	ret_child = 0;
+	while (i < size)
+	{
+		waitpid(-1, &ret_child, WUNTRACED);
+		++i;
+	}
+	return ;
 }
 
 void	dup2_children(int max, int index, int pipefd[2], int files[2])
 {
-	int		fd_0;
-	int		fd_1;
-
 	if (index == 0)
 	{
-		fd_0 = files[0];
-		fd_1 = pipefd[1];
+		dup2(files[0], 0);
+		dup2(pipefd[1], 1);
 	}
 	else if (index == max)
 	{
-		fd_0 = pipefd[0];
-		fd_1 = files[1];
+		dup2(pipefd[0], 0);
+		dup2(files[1], 1);
 	}
 	else
 	{
-		fd_0 = pipefd[0];
-		fd_1 = pipefd[1];
+		dup2(pipefd[0], 0);
+		dup2(pipefd[1], 1);
 	}
-	dup2(fd_0, 0);
-	dup2(fd_1, 1);
-	return ;
+	if (max == index && index == 1)
+	{
+		dup2(files[0], 0);
+		dup2(files[1], 1);
+	}
 }

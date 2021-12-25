@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 14:56:34 by user42            #+#    #+#             */
-/*   Updated: 2021/12/16 18:42:46 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/25 18:57:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 char	**get_cmd_args(char *cmd)
 {
-	char	*path;
 	char	**args;
 
 	if (!cmd)
 		return (NULL);
 	args = ft_split(cmd, ' ');
-	// path = ft_strjoin("/bin/", args[0]);
-	// free(args[0]);
-	args[0] = path;
+	args[0] = NULL;
 	return (args);
 }
 
