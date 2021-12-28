@@ -1,0 +1,3 @@
+to make the bonus of : << >> 
+	- add "O_APPEND" to the open function call
+	- this will write any information at the end of the end

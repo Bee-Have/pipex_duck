@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 17:10:17 by user42            #+#    #+#             */
-/*   Updated: 2021/12/25 19:49:12 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/28 15:14:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ int	fork_cmds(int files[2], char **cmds, char *env[])
 	if (!children)
 		return (EXIT_FAILURE);
 	pipe(pipefd);
+	// printf("cmds nbr [%d]\n", ft_tablen((const char **)cmds));
 	while (i < ft_tablen((const char **)cmds))
 	{
 		children[i] = fork();
 		if (children[i] == 0)
 		{
-			dup2_children(ft_tablen((const char **)cmds), i, pipefd, files);
+			dup2_children(ft_tablen((const char **)cmds) - 1, i, pipefd, files);
 			cmd_args = get_cmd_args(cmds[i]);
 			close(pipefd[0]);
 			if (check_cmd_env(&cmd_args[0], env) == PATH_OK)
@@ -64,22 +65,20 @@ void	dup2_children(int max, int index, int pipefd[2], int files[2])
 {
 	if (index == 0)
 	{
+		printf("First child\n");
 		dup2(files[0], 0);
 		dup2(pipefd[1], 1);
 	}
 	else if (index == max)
 	{
+		printf("Last child\n");
 		dup2(pipefd[0], 0);
 		dup2(files[1], 1);
 	}
 	else
 	{
+		printf("Middle child\n");
 		dup2(pipefd[0], 0);
 		dup2(pipefd[1], 1);
-	}
-	if (max == index && index == 1)
-	{
-		dup2(files[0], 0);
-		dup2(files[1], 1);
 	}
 }

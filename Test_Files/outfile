@@ -1,0 +1,9 @@
+/home/user42/Bureau/repo/pipex_duck
+ 4096 déc.   8 17:48 How_To
+drwxrwxr-x 2 user42 user42  4096 déc.   6 15:51 Includes
+drwxrwxr-x 4 user42 user42  4096 déc.   6 15:51 Libs
+-rw-rw-r-- 1 user42 user42  1098 déc.  25 18:52 Makefile
+drwxrwxr-x 2 user42 user42  4096 déc.  28 14:54 Objs
+-rwxrwxr-x 1 user42 user42 18216 déc.  28 14:54 pipex
+drwxrwxr-x 5 user42 user42  4096 déc.  13 17:16 Srcs
+drwxrwxr-x 2 user42 user42  4096 déc.  28 11:23 Test_Files
