@@ -1,0 +1,2 @@
+KO- add check to main for bonus : << >>
+KO- change var cmds in main since << >> is signified by the keyword "here_doc"
