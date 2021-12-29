@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:02:36 by user42            #+#    #+#             */
-/*   Updated: 2021/12/28 14:57:32 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/29 14:26:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int ac, char **av, char *env[])
 	i = 0;
 	//open fd infile/outfile
 	files[0] = open(av[1], O_RDONLY);
-	files[1] = open(av[ac - 1], O_WRONLY);
+	files[1] = open(av[ac - 1], O_WRONLY | O_TRUNC);
 	//create new 'av' with just cmds
 	cmds = (char **)malloc(((ac - 3) + 1) * sizeof(char *));
 	if (!cmds)
