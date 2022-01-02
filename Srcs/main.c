@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:02:36 by user42            #+#    #+#             */
-/*   Updated: 2021/12/29 14:26:34 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/02 10:13:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,19 @@
 int	main(int ac, char **av, char *env[])
 {
 	int		files[2];
+	int		bonus;
 	int		i;
 	char	**cmds;
 
+	//check program name
+	if (ft_strcmp(av[0], "./pipex"))
+		bonus = 0;
+	else if (ft_strcmp(av[0], "./pipex_bonus"))
+		bonus = 1;
+	else
+		return(print_error(ERNO_NAME));
 	//parse
-	if (parsing_args(ac, av) == EXIT_FAILURE)
+	if (parsing_args(bonus, ac, av) == EXIT_FAILURE)
 		return(EXIT_FAILURE);
 	i = 0;
 	//open fd infile/outfile
