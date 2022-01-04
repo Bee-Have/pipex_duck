@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:08:43 by user42            #+#    #+#             */
-/*   Updated: 2021/12/25 18:53:14 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/04 16:46:21 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	print_error(int erno)
 {
 	//look how to do enum because dis is bad
 	//add usage if problem comes from parsing args
-	if (erno == ERNO_ARGS_NBR)
+	if (erno == ERNO_ARGS_NBR_LESS)
 		ft_putstr("Error: Wrong number of arguments\n");
 	else if (erno == ERNO_INFILE)
 		ft_putstr("Error: Wrong path for infile\n");

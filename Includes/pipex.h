@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/02 10:10:15 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/04 16:46:09 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,15 @@
 # define PATH_KO -1
 
 # define ERNO_NAME 0
-# define ERNO_ARGS_NBR 1
-# define ERNO_INFILE 2
-# define ERNO_OUTFILE 3
-# define ERNO_PATH 4
-# define ERNO_BONUS 5
+# define ERNO_INFILE 1
+# define ERNO_OUTFILE 2
+# define ERNO_NO_ARGS 3
+# define ERNO_ARGS_NBR_LESS 4
+# define ERNO_ARGS_NBR_MORE 5
+# define ERNO_ARGS_NO_BONUS 6
+# define ERNO_BONUS_NO_ARGS 7
+# define ERNO_BONUS_ARGS_NBR 8
+# define ERNO_PATH 9
 
 //MAIN
 int		main(int ac, char **av, char *env[]);
@@ -41,7 +45,10 @@ char	**get_cmd_args(char *cmd);
 int		check_cmd_env(char **cmd, char *env[]);
 
 //PARSING ARGS
-int		parsing_args(int bonus, int ac, char **av);
+int		parsing_manager(int bonus, int ac, char **av);
+int		parsing_files(int bonus, int ac, char **av);
+int		parsing_args_nbr(int ac, char **av);
+int		parsing_args_nbr_bonus(int ac, char **av);
 
 //FORKING
 int		fork_cmds(int files[2], char **cmds, char *env[]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:02:36 by user42            #+#    #+#             */
-/*   Updated: 2022/01/02 10:13:14 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/04 16:41:20 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	main(int ac, char **av, char *env[])
 	char	**cmds;
 
 	//check program name
-	if (ft_strcmp(av[0], "./pipex"))
+	if (ft_strcmp(av[0], "./pipex") == 0)
 		bonus = 0;
-	else if (ft_strcmp(av[0], "./pipex_bonus"))
+	else if (ft_strcmp(av[0], "./pipex_bonus") == 0)
 		bonus = 1;
 	else
 		return(print_error(ERNO_NAME));
 	//parse
-	if (parsing_args(bonus, ac, av) == EXIT_FAILURE)
+	if (parsing_manager(bonus, ac, av) == EXIT_FAILURE)
 		return(EXIT_FAILURE);
 	i = 0;
 	//open fd infile/outfile
