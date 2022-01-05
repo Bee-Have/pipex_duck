@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork_manager.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 17:10:17 by user42            #+#    #+#             */
-/*   Updated: 2021/12/28 15:14:53 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/05 15:35:52 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 //send : infile/outfile-(int[2]) av env 
 //Other function for fork
-int	fork_cmds(int files[2], char **cmds, char *env[])
+int	fork_cmds(int pipefd[2], int files[2], char **cmds, char *env[])
 {
 	int		i;
-	int		pipefd[2];
+	// int		pipefd[2];
 	pid_t	*children;
 	char	**cmd_args;
 
@@ -25,7 +25,7 @@ int	fork_cmds(int files[2], char **cmds, char *env[])
 	children = (pid_t *)malloc(ft_tablen((const char **)cmds) * sizeof(pid_t));
 	if (!children)
 		return (EXIT_FAILURE);
-	pipe(pipefd);
+	// pipe(pipefd);
 	// printf("cmds nbr [%d]\n", ft_tablen((const char **)cmds));
 	while (i < ft_tablen((const char **)cmds))
 	{
@@ -65,19 +65,16 @@ void	dup2_children(int max, int index, int pipefd[2], int files[2])
 {
 	if (index == 0)
 	{
-		printf("First child\n");
 		dup2(files[0], 0);
 		dup2(pipefd[1], 1);
 	}
 	else if (index == max)
 	{
-		printf("Last child\n");
 		dup2(pipefd[0], 0);
 		dup2(files[1], 1);
 	}
 	else
 	{
-		printf("Middle child\n");
 		dup2(pipefd[0], 0);
 		dup2(pipefd[1], 1);
 	}

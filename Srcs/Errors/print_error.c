@@ -1,28 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_error.c                                      :+:      :+:    :+:   */
+/*   error_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:08:43 by user42            #+#    #+#             */
-/*   Updated: 2022/01/04 16:46:21 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/05 13:49:16 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	print_error(int erno)
+int	error_manager(int erno)
 {
-	//look how to do enum because dis is bad
-	//add usage if problem comes from parsing args
-	if (erno == ERNO_ARGS_NBR_LESS)
-		ft_putstr("Error: Wrong number of arguments\n");
-	else if (erno == ERNO_INFILE)
-		ft_putstr("Error: Wrong path for infile\n");
-	else if (erno == ERNO_OUTFILE)
-		ft_putstr("Error: Wrong path for outfile\n");
-	else if (erno == ERNO_PATH)
-		ft_putstr("Error: command does not exist or path has been deleted\n");
+	//For : 0 -> print error + exemple of names
+	//For : 9 -> print error
+	//For : 3 to 6 -> print error + exemple of how to compile
+	//For : 7 to 8 -> print error + exemple of how to compile
+	if (erno == ERNO_NAME || erno == ERNO_INFILE || erno == ERNO_OUTFILE 
+		|| erno == ERNO_PATH)
+		singular_errors(erno);
+	else if (erno == ERNO_NO_ARGS || erno == ERNO_ARGS_NBR_LESS
+		|| erno == ERNO_ARGS_NBR_MORE || erno == ERNO_ARGS_NO_BONUS)
+		mandatory_errors(erno);
+	else if (erno == ERNO_BONUS_NO_ARGS || erno == ERNO_BONUS_ARGS_NBR)
+		bonus_errors(erno);
 	return (EXIT_FAILURE);
+}
+
+//SINGULAR errors
+void	singular_errors(int erno)
+{
+
+}
+
+//MANDATORY erros
+void	mandatory_errors(int erno)
+{
+
+}
+
+//BONUS errors
+void	bonus_errors(int erno)
+{
+
 }

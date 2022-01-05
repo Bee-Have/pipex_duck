@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_managment.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 14:56:34 by user42            #+#    #+#             */
-/*   Updated: 2021/12/28 14:54:12 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/05 13:49:54 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ int	check_cmd_env(char **cmd, char *env[])
 		free(tmp);
 		++i;
 	}
-	print_error(ERNO_PATH);
+	error_manager(ERNO_PATH);
 	return (PATH_KO);
 }

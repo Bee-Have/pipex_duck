@@ -1,3 +1,13 @@
 to make the bonus of : << >> 
 	- add "O_APPEND" to the open function call
 	- this will write any information at the end of the end
+
+in main -> if here_doc
+
+while (ft_strcmp(line, "LIMITER"))
+{
+	free(line);
+	write "pipe here_doc> " stdout
+	gnl(stdin, *line)
+	ft_add_tad(**file, line);
+}

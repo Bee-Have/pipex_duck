@@ -19,7 +19,7 @@ INCLUDES = -I$(LIBFT_DIR)/Includes -I$(LIBGNL_DIR)/Includes -I$(INC_DIR)
 
 vpath %.c $(foreach dir, $(SRCS_DIR), $(dir):)
 
-SRCS = print_error.c \
+SRCS = error_manager.c \
 	args_managment.c fork_manager.c \
 	parsing_manager.c \
 	main.c
