@@ -1,3 +1,5 @@
 KO- check Makefile with norm for the compiling rules
 KO- delete all @ from all libs
 KO- add open different for here_doc
+KO- correct parsing for here_doc
+KO- implement all errors and prints of errors
