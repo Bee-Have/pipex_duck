@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/05 15:53:32 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/07 15:20:46 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,18 @@ int		parsing_args_nbr_bonus(int ac, char **av);
 
 //BONUS
 char	**get_here_doc(char *limiter);
+char	**here_doc_checker(int ac, char **av, int (*pipefd)[2], int (*files)[2]);
+char	**make_av_cmds(int modifier, int ac, char **av);
 
 //FORKING
-int		fork_cmds(int files[2], char **cmds, char *env[]);
+int		fork_cmds(int pipefd[2], int files[2], char **cmds, char *env[]);
 void	wait_for_children(/*pid_t *children,*/ int size);
 void	dup2_children(int max, int index, int pipefd[2], int files[2]);
 
 //ERROR MANAGEMENT
 int		error_manager(int erno);
+// void	singular_errors(int erno);
+// void	mandatory_errors(int erno);
+// void	bonus_errors(int erno);
 
 #endif

@@ -1,5 +1,9 @@
-/home/user42/Bureau/repo/pipex_duck
-/home/user42/Bureau/repo/pipex_duck
-/home/user42/Bureau/repo/pipex_duck
-/home/user42/Bureau/repo/pipex_duck
-/home/user42/Bureau/repo/pipex_duck
+total 75
+drwxr-xr-x  2 amarini-  2020_paris      9 Jan  7 15:01 How_To
+drwxr-xr-x  2 amarini-  2020_paris      3 Jan  7 15:01 Includes
+drwxr-xr-x  4 amarini-  2020_paris      4 Jan  7 15:01 Libs
+-rw-r--r--  1 amarini-  2020_paris   1112 Jan  7 15:13 Makefile
+drwxr-xr-x  2 amarini-  2020_paris      8 Jan  7 15:42 Objs
+drwxr-xr-x  6 amarini-  2020_paris      8 Jan  7 15:01 Srcs
+drwxr-xr-x  2 amarini-  2020_paris      4 Jan  7 15:01 Test_Files
+-rwxr-xr-x  1 amarini-  2020_paris  33416 Jan  7 15:42 pipex
