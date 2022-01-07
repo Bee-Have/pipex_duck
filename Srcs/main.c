@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:02:36 by user42            #+#    #+#             */
-/*   Updated: 2022/01/07 15:45:49 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/07 16:18:28 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	main(int ac, char **av, char *env[])
 
 	//parse
 	// here_doc = NULL;
-	// if (parsing_manager(ac, av) == EXIT_FAILURE)
-	// 	return(EXIT_FAILURE);
+	if (parsing_manager(ac, av) == EXIT_FAILURE)
+		return(EXIT_FAILURE);
 	//check for here_doc
 	//if here_doc -> send to other function
 	// if (ft_strcmp(av[1], "here_doc") == 0)

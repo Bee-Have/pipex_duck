@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:04:12 by user42            #+#    #+#             */
-/*   Updated: 2022/01/05 15:44:51 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/07 17:45:14 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ int	parsing_manager(int ac, char **av)
 	if (ft_strcmp(av[0], "./pipex") == 1
 		&& ft_strcmp(av[0], "./pipex_bonus") == 1)
 		return(error_manager(ERNO_NAME));
-	//check for infile/outfile
-	if (parsing_files(ft_strcmp(av[0], "./pipex"), ac, av) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
 	if (ft_strcmp(av[0], "./pipex") == 0)
 	{
 		//check for args NO BONUS
@@ -33,15 +30,21 @@ int	parsing_manager(int ac, char **av)
 		if (parsing_args_nbr_bonus(ac, av) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
+	//check for infile/outfile
+	if (parsing_files(ac, av) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-int	parsing_files(int bonus, int ac, char **av)
+int	parsing_files(int ac, char **av)
 {
 	int	ret_infile;
 	int	ret_outfile;
 
-	ret_infile = open(av[1 + bonus], O_RDONLY);
+	if (ft_strcmp(av[1], "here_doc") == 0)
+		ret_infile = 0;
+	else
+		ret_infile = open(av[1], O_RDONLY);
 	ret_outfile = open(av[ac - 1], O_RDWR);
 	if(ret_infile == -1)
 	{
@@ -60,6 +63,9 @@ int	parsing_files(int bonus, int ac, char **av)
 
 int	parsing_args_nbr(int ac, char **av)
 {
+	//if av[1] == here_doc -> error BONUS_FOR_NOBONUS
+	if (ft_strcmp(av[1], "here_doc") == 0)
+		return (error_manager(ERNO_ARGS_NO_BONUS));
 	//if no args -> error NO_ARGS
 	if (ac == 1)
 		return (error_manager(ERNO_NO_ARGS));
@@ -69,9 +75,6 @@ int	parsing_args_nbr(int ac, char **av)
 	//if args > 4 -> error TO_MANY_ARGS
 	if (ac > 5)
 		return (error_manager(ERNO_ARGS_NBR_MORE));
-	//if av[1] == here_doc -> error BONUS_FOR_NOBONUS
-	if (ft_strcmp(av[1], "here_doc") == 0)
-		return (error_manager(ERNO_ARGS_NO_BONUS));
 	return (EXIT_SUCCESS);
 }
 

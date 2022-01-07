@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:46:53 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/07 15:40:19 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/07 16:40:40 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	**here_doc_checker(int ac, char **av, int (*pipefd)[2], int (*files)[2])
 	//first, get heredoc
 	if (ft_strcmp(av[1], "here_doc") == 0)
 		here_doc = get_here_doc(av[2]);
-	ft_print_tab(here_doc);
 	//open infile && outfile
 	if (here_doc == NULL)
 	{

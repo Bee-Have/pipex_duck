@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/07 15:20:46 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/07 17:02:28 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		check_cmd_env(char **cmd, char *env[]);
 
 //PARSING ARGS
 int		parsing_manager(int ac, char **av);
-int		parsing_files(int bonus, int ac, char **av);
+int		parsing_files(int ac, char **av);
 int		parsing_args_nbr(int ac, char **av);
 int		parsing_args_nbr_bonus(int ac, char **av);
 
@@ -62,8 +62,8 @@ void	dup2_children(int max, int index, int pipefd[2], int files[2]);
 
 //ERROR MANAGEMENT
 int		error_manager(int erno);
-// void	singular_errors(int erno);
-// void	mandatory_errors(int erno);
-// void	bonus_errors(int erno);
+void	singular_errors(int erno);
+void	mandatory_errors(int erno);
+void	bonus_errors(int erno);
 
 #endif

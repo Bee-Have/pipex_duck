@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 17:10:17 by user42            #+#    #+#             */
-/*   Updated: 2022/01/05 15:35:52 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/07 17:43:25 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	fork_cmds(int pipefd[2], int files[2], char **cmds, char *env[])
 		{
 			dup2_children(ft_tablen((const char **)cmds) - 1, i, pipefd, files);
 			cmd_args = get_cmd_args(cmds[i]);
+			// if (ft_strncmp(cmds[i + 1], "cat", 3) == 0)
+				// close(pipefd[1]);
 			close(pipefd[0]);
 			if (check_cmd_env(&cmd_args[0], env) == PATH_OK)
 				execve(cmd_args[0], cmd_args, env);
@@ -42,6 +44,7 @@ int	fork_cmds(int pipefd[2], int files[2], char **cmds, char *env[])
 		}
 		++i;
 	}
+	close(pipefd[1]);
 	wait_for_children(/*children, */ft_tablen((const char **)cmds));
 	return (EXIT_SUCCESS);
 }
