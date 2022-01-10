@@ -1,4 +1,5 @@
-NAME = pipex_bonus
+NAME = pipex
+NAME_BONUS = pipex_bonus
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
@@ -19,17 +20,17 @@ INCLUDES = -I$(LIBFT_DIR)/Includes -I$(LIBGNL_DIR)/Includes -I$(INC_DIR)
 
 vpath %.c $(foreach dir, $(SRCS_DIR), $(dir):)
 
-SRCS = print_error.c \
-	here_doc.c \
-	args_managment.c fork_manager.c \
-	parsing_manager.c \
-	main.c
+SRCS = 
 
 # SRCS = main_test.c
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
 
 all: $(LIBFT_DIR)/libft.a $(LIBGNL_DIR)/libgetfile.a $(NAME)
+
+bonus: $(LIBFT_DIR)/libft.a $(LIBGNL_DIR)/libgetfile.a $(NAME_BONUS)
+
+both: $(LIBFT_DIR)/libft.a $(LIBGNL_DIR)/libgetfile.a $(NAME) $(NAME_BONUS)
 
 $(LIBFT_DIR)/libft.a:
 	make -C $(LIBFT_DIR) all
@@ -39,6 +40,9 @@ $(LIBGNL_DIR)/libgetfile.a:
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
+
+$(NAME_BONUS): $(OBJS)
+	$(CC) $(CFLAGS) -D BONUS=1 $^ -o $@ $(LIBS)
 
 $(OBJS_DIR)/%.o: %.c
 	mkdir -p $(dir $@)

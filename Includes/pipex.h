@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/07 17:02:28 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/10 15:57:13 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@
 # define ERNO_ARGS_NBR_LESS 4
 # define ERNO_ARGS_NBR_MORE 5
 # define ERNO_ARGS_NO_BONUS 6
-# define ERNO_BONUS_NO_ARGS 7
-# define ERNO_BONUS_ARGS_NBR 8
-# define ERNO_PATH 9
+# define ERNO_EMPTY_CMD 7
+# define ERNO_PATH 8
 
 //MAIN
 int		main(int ac, char **av, char *env[]);
@@ -57,7 +56,7 @@ char	**make_av_cmds(int modifier, int ac, char **av);
 
 //FORKING
 int		fork_cmds(int pipefd[2], int files[2], char **cmds, char *env[]);
-void	wait_for_children(/*pid_t *children,*/ int size);
+void	wait_for_children(pid_t *children, int size, int pipefd[2]);
 void	dup2_children(int max, int index, int pipefd[2], int files[2]);
 
 //ERROR MANAGEMENT

@@ -1,0 +1,12 @@
+to folders in srcs : Mandatory - Bonus
+error can be a common thing
+
+
+fork_cmds becomes ->
+fork_manager()
+{
+	//calls function to pipe
+	//call function to dup2
+	//call function to fork
+	//call function to waitpid
+}

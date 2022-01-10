@@ -6,13 +6,13 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:04:12 by user42            #+#    #+#             */
-/*   Updated: 2022/01/07 17:45:14 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/10 16:27:42 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	parsing_manager(int ac, char **av)
+int	parsing_manager_old(int ac, char **av)
 {
 	//check program name
 	if (ft_strcmp(av[0], "./pipex") == 1
@@ -88,9 +88,9 @@ int	parsing_args_nbr_bonus(int ac, char **av)
 		offset = 1;
 	//if no args -> error NO_ARGS
 	if (ac == 1)
-		return (error_manager(ERNO_BONUS_NO_ARGS));
+		return (error_manager(ERNO_NO_ARGS));
 	//if args < 4 + offset -> error NO ARGS
 	if (ac < (5 + offset))
-		return (error_manager(ERNO_BONUS_ARGS_NBR));
+		return (error_manager(ERNO_ARGS_NBR_LESS));
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 15:46:53 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/07 16:40:40 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/10 17:38:46 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ char	**here_doc_checker(int ac, char **av, int (*pipefd)[2], int (*files)[2])
 	{
 		while (here_doc[i])
 		{
-			write((*pipefd)[0], here_doc[i], ft_strlen(here_doc[i]));
-			write((*pipefd)[0], "\n", 1);
+			write((*pipefd)[1], here_doc[i], ft_strlen(here_doc[i]));
+			write((*pipefd)[1], "\n", 1);
 			++i;
 		}
 		ft_freetab(here_doc);
-		*files[0] = (*pipefd)[0];
+		(*files)[0] = (*pipefd)[0];
 	}
 	return (cmds);
 }
