@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:19:52 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/12 16:19:06 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:48:14 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	fork_cmds(pid_t *child, int files[2], int pipefd[2], char **cmds, char *env[
 		child[i] = fork();
 		if (child[i] == 0)
 		{
-			dup2_children(len, i, pipefd, files);
+			dup2_children(len - 1, i, pipefd, files);
 			cmd_args = get_cmd_args(cmds[i]);
 			close(pipefd[0]);
 			if (check_cmd_env(&cmd_args[0], env) == PATH_OK)
