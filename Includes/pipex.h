@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/10 15:57:13 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:15:35 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,35 @@
 //MAIN
 int		main(int ac, char **av, char *env[]);
 
-//MAIN ARGS MANAGER
+# ifdef BONUS
+char	**get_lines_limiter(char *limiter);
+char	**make_av_cmds(int ac, char **av);
+void	write_here_doc_file(int (*pipefd)[2], int (*files)[2], char **here_doc);
+# endif
+
+//PARSING
+int		parsing_manager(int ac, char **av);
+int		parsing_args(int ac, char **av);
+int		parsing_files(int ac, char **av);
+
+//FORK
+# ifndef BONUS
+int		fork_manager(int files[2], char **cmds, char *env[]);
+void	dup2_children(int index, int pipefd[2], int files[2]);
+# else
+int		fork_manager(int pipefd[2], int files[2], char **cmds, char *env[]);
+void	dup2_children(int max, int index, int pipefd[2], int files[2]);
+# endif
+int		fork_cmds(pid_t *child, int files[2], int pipefd[2], char **cmds, char *env[]);
+void	wait_for_children(pid_t *children, int size);
 char	**get_cmd_args(char *cmd);
 int		check_cmd_env(char **cmd, char *env[]);
 
-//PARSING ARGS
-int		parsing_manager(int ac, char **av);
-int		parsing_files(int ac, char **av);
-int		parsing_args_nbr(int ac, char **av);
-int		parsing_args_nbr_bonus(int ac, char **av);
-
-//BONUS
-char	**get_here_doc(char *limiter);
-char	**here_doc_checker(int ac, char **av, int (*pipefd)[2], int (*files)[2]);
-char	**make_av_cmds(int modifier, int ac, char **av);
-
-//FORKING
-int		fork_cmds(int pipefd[2], int files[2], char **cmds, char *env[]);
-void	wait_for_children(pid_t *children, int size, int pipefd[2]);
-void	dup2_children(int max, int index, int pipefd[2], int files[2]);
-
-//ERROR MANAGEMENT
+//ERRORS
 int		error_manager(int erno);
-void	singular_errors(int erno);
-void	mandatory_errors(int erno);
-void	bonus_errors(int erno);
+char	*get_error_args(int erno);
+char	*get_error_misc(int erno);
+char	*add_prefix_sufix(char *error);
+
 
 #endif

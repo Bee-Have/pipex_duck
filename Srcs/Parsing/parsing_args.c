@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:12:37 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/10 16:26:49 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/12 15:59:57 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	parsing_args(int ac, char **av)
 	if (ft_strcmp(av[1], "here_doc") == 0)
 		return (error_manager(ERNO_ARGS_NO_BONUS));
 	//if no arg :(
-	if (ac == 1)
+	if (ac <= 1)
 		return (error_manager(ERNO_NO_ARGS));
 	//if args are incomplete :(
 	if (ac < 5)
@@ -39,7 +39,7 @@ int	parsing_args(int ac, char **av)
 	offset = 0;
 	if (ft_strcmp(av[1], "here_doc") == 0)
 		offset = 1;
-	if (ac == 1)
+	if (ac <= 1)
 		return (error_manager(ERNO_NO_ARGS));
 	if (ac < (5 + offset))
 		return (error_manager(ERNO_ARGS_NBR_LESS));

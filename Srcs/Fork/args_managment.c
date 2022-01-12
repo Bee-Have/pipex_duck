@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:40:09 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/10 15:29:07 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/12 15:56:45 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	**get_cmd_args(char *cmd)
 {
-	char	*args;
+	char	**args;
 
 	if (!cmd)
 	{
