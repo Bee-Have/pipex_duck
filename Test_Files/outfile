@@ -1,22 +1,9 @@
-/mnt/nfs/homes/amarini-/Desktop/repo/pipex_duck
-/mnt/nfs/homes/amarini-/Desktop/repo/pipex_duck
-How_To
-Includes
-Libs
-Makefile
-Objs
-Objs_Bonus
-pipex
-pipex_bonus
-Srcs
-Test_Files
-How_To
-Includes
-Libs
-Makefile
-Objs
-Objs_Bonus
-pipex
-pipex_bonus
-Srcs
-Test_Files
+total 48
+drwxrwxr-x 2 user42 user42  4096 janv. 18 11:47 How_To
+drwxrwxr-x 2 user42 user42  4096 janv. 18 11:47 Includes
+drwxrwxr-x 4 user42 user42  4096 janv. 18 11:47 Libs
+-rw-rw-r-- 1 user42 user42  1663 janv. 18 11:47 Makefile
+drwxrwxr-x 2 user42 user42  4096 janv. 18 11:48 Objs
+-rwxrwxr-x 1 user42 user42 18752 janv. 18 11:48 pipex
+drwxrwxr-x 5 user42 user42  4096 janv. 18 11:47 Srcs
+drwxrwxr-x 2 user42 user42  4096 janv. 18 11:47 Test_Files

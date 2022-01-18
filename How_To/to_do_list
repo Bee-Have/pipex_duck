@@ -3,9 +3,11 @@ OK- add open different for here_doc
 OK- correct parsing for here_doc
 OK- implement all errors and prints of errors
 
-KO- check Makefile with norm for the compiling rules
-KO- refacto project so mandatory and bonuses are different
-KO- (refacto) make new architecture
-KO- (refacto) change makefile
-KO- (refacto) make new scripts for both version
-KO- check dup2 for potential errors
+OK- check Makefile with norm for the compiling rules
+OK- refacto project so mandatory and bonuses are different
+OK- (refacto) make new architecture
+OK- (refacto) change makefile
+OK- (refacto) make new scripts for both version
+OK- check dup2 for potential errors
+
+KO- update pipe functionality so it works on multipipe
