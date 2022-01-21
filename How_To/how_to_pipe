@@ -1,22 +1,15 @@
-at the end of each child, just before execve
-send pipefd to function
-use 'dup' to create new file for the outfile
+tmp = dupp(stdin)
 
+pipe dans le parent
 fork
-if child :
-if the child is not the first or the last :
-cpy = dup(pipefd[0](stdin))
-close pipefd
-pipe(pipefd)
-dup2()
-NO !
+if child
+	if first :
+		-dup2 infile -> stdin
+		-dup2 pipe[1] -> stdout
+	close(pipe[0]);
+	close(pipe[1]);
+	excve
+if parent
+	dup2(tmp, pipe[0]);
+	close(pipe);
 
-the problem is the pipe i the same
-reidrecting it seems to be the issue
-but why stdin ??
-i'm confused
-god i feel dumb
-maybe i am ?
-think
-
-there's something you missed in there

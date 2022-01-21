@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:14:53 by user42            #+#    #+#             */
-/*   Updated: 2022/01/21 15:27:27 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/21 17:18:47 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ int	main(int ac, char **av, char *env[])
 	char	**cmd_arg;
 	int		return_child;
 	int		pipefd[2];
-	int		pipe_cpy;
+	int		fd_cpy;
 	pid_t	*id;
 
+	fd_cpy = dup(STDIN_FILENO);
 	printf("ac-[%d]\n", ac);
 	i = 2;
 	infile = open(av[1], O_RDONLY);
@@ -65,9 +66,9 @@ int	main(int ac, char **av, char *env[])
 	}
 	i_id = 0;
 	return_child = 0;
-	pipe(pipefd);
 	while (i < (ac - 1))
 	{
+		pipe(pipefd);
 		id[i_id] = fork();
 		if (id[i_id] == 0)
 		{
@@ -81,40 +82,36 @@ int	main(int ac, char **av, char *env[])
 			else if (i_id == (id_len - 1))
 			{
 				printf("last child\n");
-				dup2(pipefd[0], 0);
+				dup2(fd_cpy, 0);
 				dup2(outfile, 1);
 			}
 			else
 			{
 				printf("middle child\n");
-				dup2(pipefd[0], 0);
+				dup2(fd_cpy, 0);
 				dup2(pipefd[1], 1);
 			}
 			cmd_arg = get_cmd_args(av[i]);
 			close(pipefd[0]);
+			close(pipefd[1]);
 			execve(cmd_arg[0], cmd_arg, env);
 			exit(1);
 		}
-		// else
-		// {
-		// 	pipe_cpy = dup(pipefd[0]);
-		// 	close(pipefd[1]);
-		// 	pipe(pipefd);
-		// 	// pipefd[0] = pipe_cpy;
-		// 	dup2(pipefd[0], pipe_cpy);
-		// 	close(pipefd[0]);
-		// }
+		else
+		{
+			dup2(fd_cpy, pipefd[0]);
+			close(pipefd[0]);
+			close(pipefd[1]);
+		}
 		++i;
 		++i_id;
 	}
 	i_id = 0;
-	close(pipefd[1]);
 	while (i_id < id_len)
 	{
 		waitpid(id[i_id], &return_child, WUNTRACED);
 		++i_id;
 	}
-	close(pipefd[0]);
 	close(infile);
 	close(outfile);
 	free(id);
