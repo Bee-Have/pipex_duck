@@ -1,13 +1,1 @@
-total 52
-drwxr-xr-x 2 amarini- 2020_paris  4096 Jan 21 14:21 How_To
-drwxr-xr-x 2 amarini- 2020_paris  4096 Jan 10 13:08 Includes
-drwxr-xr-x 4 amarini- 2020_paris  4096 Jan 10 13:09 Libs
--rw-r--r-- 1 amarini- 2020_paris  1642 Jan 21 18:10 Makefile
-drwxr-xr-x 2 amarini- 2020_paris  4096 Jan 21 18:11 Objs
--rwxr-xr-x 1 amarini- 2020_paris 23048 Jan 21 18:11 pipex
-drwxr-xr-x 6 amarini- 2020_paris  4096 Jan 21 14:35 Srcs
-drwxr-xr-x 2 amarini- 2020_paris  4096 Jan 21 14:21 Test_Files
-hey
-hey
-hey
 hey

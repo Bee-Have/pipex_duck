@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:19:52 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/21 18:23:56 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/21 19:03:17 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	fork_manager(int files[2], char **cmds, char *env[])
 	if (ret_fork == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	wait_for_children(child, len_cmds);
+	free(child);
 	return (EXIT_SUCCESS);
 }
 
@@ -49,6 +50,7 @@ int	fork_cmds(pid_t *child, int files[2],char **cmds, char *env[])
 			dup2_children(i, pipefd, files);
 			cmd_args = get_cmd_args(cmds[i]);
 			close(pipefd[0]);
+			close(pipefd[1]);
 			if (check_cmd_env(&cmd_args[0], env) == PATH_OK)
 				execve(cmd_args[0], cmd_args, env);
 			else
@@ -56,6 +58,8 @@ int	fork_cmds(pid_t *child, int files[2],char **cmds, char *env[])
 		}
 		++i;
 	}
+	close(pipefd[0]);
+	close(pipefd[1]);
 	return (EXIT_SUCCESS);
 }
 

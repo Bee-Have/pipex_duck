@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/21 18:28:58 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/21 18:48:00 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int		fork_manager(int files[2], char **cmds, char *env[]);
 int		fork_cmds(pid_t *child, int files[2], char **cmds, char *env[]);
 void	dup2_children(int index, int pipefd[2], int files[2]);
 # else
-int		fork_manager(/*int pipefd[2], */int files[3], char **cmds, char *env[]);
-int		fork_cmds(pid_t *child, int files[3],/* int pipefd[2], */char **cmds, char *env[]);
+int		fork_manager(int files[3], char **cmds, char *env[]);
+int		fork_cmds(pid_t *child, int files[3], char **cmds, char *env[]);
 void	dup2_children(int max, int index, int pipefd[2], int files[3]);
 # endif
 void	wait_for_children(pid_t *children, int size);
