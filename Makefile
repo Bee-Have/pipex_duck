@@ -21,7 +21,7 @@ INCLUDES = -I$(LIBFT_DIR)/Includes -I$(LIBGNL_DIR)/Includes -I$(INC_DIR)
 
 vpath %.c $(foreach dir, $(SRCS_DIR), $(dir):)
 
-SRCS = main.c \
+# SRCS = main.c \
 	parsing_manager.c parsing_args.c parsing_files.c \
 	fork_manager.c fork_utils.c args_managment.c \
 	error_manager.c get_error_msg.c error_prefix_sufix.c

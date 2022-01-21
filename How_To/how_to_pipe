@@ -2,11 +2,21 @@ at the end of each child, just before execve
 send pipefd to function
 use 'dup' to create new file for the outfile
 
-int	fd_tmp;
-if (child != 0 && child != max)
-{
-	//change write end of the pipe
-	fd_tmp = dup(pipefd[1]);
-	close(pipefd[1]);
-	pipefd = fd_tmp;
-}
+fork
+if child :
+if the child is not the first or the last :
+cpy = dup(pipefd[0](stdin))
+close pipefd
+pipe(pipefd)
+dup2()
+NO !
+
+the problem is the pipe i the same
+reidrecting it seems to be the issue
+but why stdin ??
+i'm confused
+god i feel dumb
+maybe i am ?
+think
+
+there's something you missed in there

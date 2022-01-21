@@ -6,12 +6,35 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:14:53 by user42            #+#    #+#             */
-/*   Updated: 2022/01/12 16:42:38 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:27:27 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+// #include "pipex.h"
 // #include "../Libs/libft_duck/Includes/libft.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+char	*ft_strjoin(char const *s1, char const *s2);
+char	**ft_split(char const *s, char c);
+
+char	**get_cmd_args(char *cmd)
+{
+	char	*path;
+	char	**args;
+
+	if (!cmd)
+		return (NULL);
+	args = ft_split(cmd, ' ');
+	path = ft_strjoin("/bin/", args[0]);
+	free(args[0]);
+	args[0] = path;
+	return (args);
+}
 
 int	main(int ac, char **av, char *env[])
 {
@@ -23,6 +46,7 @@ int	main(int ac, char **av, char *env[])
 	char	**cmd_arg;
 	int		return_child;
 	int		pipefd[2];
+	int		pipe_cpy;
 	pid_t	*id;
 
 	printf("ac-[%d]\n", ac);
@@ -71,6 +95,15 @@ int	main(int ac, char **av, char *env[])
 			execve(cmd_arg[0], cmd_arg, env);
 			exit(1);
 		}
+		// else
+		// {
+		// 	pipe_cpy = dup(pipefd[0]);
+		// 	close(pipefd[1]);
+		// 	pipe(pipefd);
+		// 	// pipefd[0] = pipe_cpy;
+		// 	dup2(pipefd[0], pipe_cpy);
+		// 	close(pipefd[0]);
+		// }
 		++i;
 		++i_id;
 	}
@@ -85,18 +118,4 @@ int	main(int ac, char **av, char *env[])
 	close(infile);
 	close(outfile);
 	free(id);
-}
-
-char	**get_cmd_args(char *cmd)
-{
-	char	*path;
-	char	**args;
-
-	if (!cmd)
-		return (NULL);
-	args = ft_split(cmd, ' ');
-	path = ft_strjoin("/bin/", args[0]);
-	free(args[0]);
-	args[0] = path;
-	return (args);
 }
