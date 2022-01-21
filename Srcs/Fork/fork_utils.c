@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:33:24 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/12 16:43:00 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/21 18:24:15 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,15 @@ void	dup2_children(int index, int pipefd[2], int files[2])
 	}
 }
 #else
-void	dup2_children(int max, int index, int pipefd[2], int files[2])
+//here : file[0]=infile | file[1]=outfile | file[2]=stdin
+void	dup2_children(int max, int index, int pipefd[2], int files[3])
 {
 	if (index == 0)
 	{
-		dup2(files[0], 0);
+		if (files[0] == NO_INFILE)
+			dup2(files[2], 0);
+		else
+			dup2(files[0], 0);
 		dup2(pipefd[1], 1);
 	}
 	else if (index == max)
@@ -41,7 +45,7 @@ void	dup2_children(int max, int index, int pipefd[2], int files[2])
 	}
 	else
 	{
-		dup2(pipefd[0], 0);
+		dup2(files[2], 0);
 		dup2(pipefd[1], 1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/12 16:15:35 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/21 18:28:58 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define PATH_OK 1
 # define PATH_KO -1
 
+# define NO_INFILE -2
+
 # define ERNO_NAME 0
 # define ERNO_INFILE 1
 # define ERNO_OUTFILE 2
@@ -42,7 +44,7 @@ int		main(int ac, char **av, char *env[]);
 # ifdef BONUS
 char	**get_lines_limiter(char *limiter);
 char	**make_av_cmds(int ac, char **av);
-void	write_here_doc_file(int (*pipefd)[2], int (*files)[2], char **here_doc);
+void	write_here_doc_file(char **here_doc);
 # endif
 
 //PARSING
@@ -53,12 +55,13 @@ int		parsing_files(int ac, char **av);
 //FORK
 # ifndef BONUS
 int		fork_manager(int files[2], char **cmds, char *env[]);
+int		fork_cmds(pid_t *child, int files[2], char **cmds, char *env[]);
 void	dup2_children(int index, int pipefd[2], int files[2]);
 # else
-int		fork_manager(int pipefd[2], int files[2], char **cmds, char *env[]);
-void	dup2_children(int max, int index, int pipefd[2], int files[2]);
+int		fork_manager(/*int pipefd[2], */int files[3], char **cmds, char *env[]);
+int		fork_cmds(pid_t *child, int files[3],/* int pipefd[2], */char **cmds, char *env[]);
+void	dup2_children(int max, int index, int pipefd[2], int files[3]);
 # endif
-int		fork_cmds(pid_t *child, int files[2], int pipefd[2], char **cmds, char *env[]);
 void	wait_for_children(pid_t *children, int size);
 char	**get_cmd_args(char *cmd);
 int		check_cmd_env(char **cmd, char *env[]);
