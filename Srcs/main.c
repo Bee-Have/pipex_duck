@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 13:50:36 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/21 19:01:34 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/21 19:11:15 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	main(int ac, char **av, char *env[])
 		write_here_doc_file(here_doc);
 	if (fork_manager(files, cmds, env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	ft_freetab(cmds);
 	if (!here_doc)
 		close(files[0]);
 	close(files[1]);

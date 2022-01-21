@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:19:52 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/21 19:03:17 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/21 19:11:38 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	fork_manager(int files[3], char **cmds, char *env[])
 	if (ret_fork == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	wait_for_children(child, len_cmds);
+	free(child);
 	return (EXIT_SUCCESS);
 }
 
