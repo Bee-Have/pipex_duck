@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:19:52 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/21 19:11:38 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:02:42 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,15 @@ int	fork_cmds(pid_t *child, int files[2],char **cmds, char *env[])
 		{
 			dup2_children(i, pipefd, files);
 			cmd_args = get_cmd_args(cmds[i]);
-			close(pipefd[0]);
-			close(pipefd[1]);
 			if (check_cmd_env(&cmd_args[0], env) == PATH_OK)
 				execve(cmd_args[0], cmd_args, env);
 			else
 				return (EXIT_FAILURE);
+		}
+		else if (child[i] != 0 && i == 0)
+		{
+			printf("closed infile\n");
+			close(files[0]);
 		}
 		++i;
 	}
@@ -101,8 +104,6 @@ int	fork_cmds(pid_t *child, int files[3],char **cmds, char *env[])
 		{
 			dup2_children(len - 1, i, pipefd, files);
 			cmd_args = get_cmd_args(cmds[i]);
-			close(pipefd[0]);
-			close(pipefd[1]);
 			if (check_cmd_env(&cmd_args[0], env) == PATH_OK)
 				execve(cmd_args[0], cmd_args, env);
 			else
@@ -110,6 +111,8 @@ int	fork_cmds(pid_t *child, int files[3],char **cmds, char *env[])
 		}
 		else
 		{
+			if (i == 0 && files[0] != NO_INFILE)
+				close(files[0]);
 			dup2(files[2], pipefd[0]);
 			close(pipefd[0]);
 			close(pipefd[1]);
