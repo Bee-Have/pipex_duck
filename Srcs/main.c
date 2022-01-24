@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 13:50:36 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/24 14:15:39 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/24 15:49:49 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,22 @@ int	main(int ac, char **av, char *env[])
 {
 	int		files[3];
 	char	**cmds;
-	char	**here_doc;
 
-	here_doc = NULL;
 	files[0] = NO_INFILE;
 	files[2] = dup(STDIN_FILENO);
 	if (parsing_manager(ac, av) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (ft_strcmp(av[1], "here_doc") == 0)
-		here_doc = get_lines_limiter(av[2]);
-	if (here_doc == NULL)
+	{
+		write_here_doc_file(get_lines_limiter(av[2]));
+		files[1] = open(av[ac - 1], O_WRONLY | O_APPEND);
+	}
+	else
+	{
 		files[0] = open(av[1], O_RDONLY);
-	files[1] = open(av[ac - 1], O_WRONLY | O_APPEND);
+		files[1] = open(av[ac - 1], O_WRONLY | O_TRUNC);
+	}
 	cmds = make_av_cmds(ac, av);
-	if (here_doc)
-		write_here_doc_file(here_doc);
 	if (fork_manager(files, cmds, env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	ft_freetab(cmds);
