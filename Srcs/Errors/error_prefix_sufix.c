@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 15:24:34 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/12 15:33:06 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:16:39 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*add_prefix_sufix(char *error)
 
 	prefix = ft_strdup("Error : ");
 	sufix = ft_strdup("\nUsage : [./]pipex_bonus {[here_doc 'LIMITER'] "
-						"|| infile} cmd1 cmd2 [cmd3 ect...] outfile\n");
+			"|| infile} cmd1 cmd2 [cmd3 ect...] outfile\n");
 	tmp = ft_strjoin(prefix, error);
 	result = ft_strjoin(tmp, sufix);
 	free(prefix);

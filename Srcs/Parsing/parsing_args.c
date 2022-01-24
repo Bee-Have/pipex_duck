@@ -6,13 +6,14 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:12:37 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/24 14:10:16 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:23:02 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 #ifndef BONUS
+
 int	parsing_args(int ac, char **av)
 {
 	if (ft_strcmp(av[1], "here_doc") == 0)
@@ -27,6 +28,7 @@ int	parsing_args(int ac, char **av)
 }
 
 #else
+
 int	parsing_args(int ac, char **av)
 {
 	int	offset;

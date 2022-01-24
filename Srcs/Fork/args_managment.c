@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:40:09 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/21 19:01:14 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/24 15:12:33 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,30 +30,39 @@ int	check_cmd_env(char **cmd, char *env[])
 	int		i;
 	char	*path;
 	char	*tmp;
-	char	**cmd_env;
+	char	**paths_tab;
 
 	i = 0;
-	tmp = ft_tabntab(env, "PATH=", 5);
-	path = ft_substr(tmp, 4, ft_strlen(tmp) - 5);
-	cmd_env = ft_split(path, ':');
-	free(tmp);
-	while (cmd_env[i])
+	paths_tab = get_possible_paths(env);
+	while (paths_tab[i])
 	{
-		free(path);
-		tmp = ft_strjoin(cmd_env[i], "/");
+		tmp = ft_strjoin(paths_tab[i], "/");
 		path = ft_strjoin(tmp, (*cmd));
 		free(tmp);
 		if (access(path, X_OK) == 0)
 		{
 			free((*cmd));
-			ft_freetab(cmd_env);
+			ft_freetab(paths_tab);
 			(*cmd) = path;
 			return (PATH_OK);
 		}
+		free(path);
 		++i;
 	}
-	free(path);
-	ft_freetab(cmd_env);
-	error_manager(ERNO_PATH);
-	return (PATH_KO);
+	ft_freetab(paths_tab);
+	return (error_manager(ERNO_PATH));
+}
+
+char	**get_possible_paths(char *env[])
+{
+	char	*all_paths;
+	char	*tmp;
+	char	**paths_tab;
+
+	tmp = ft_tabntab(env, "PATH=", 5);
+	all_paths = ft_substr(tmp, 4, ft_strlen(tmp) - 5);
+	paths_tab = ft_split(all_paths, ':');
+	free(tmp);
+	free(paths_tab);
+	return (paths_tab);
 }

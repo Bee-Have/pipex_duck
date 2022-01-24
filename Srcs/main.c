@@ -6,13 +6,14 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 13:50:36 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/24 14:09:20 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:15:39 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 #ifndef BONUS
+
 int	main(int ac, char **av, char *env[])
 {
 	int		files[2];
@@ -42,6 +43,7 @@ int	main(int ac, char **av, char *env[])
 }
 
 #else
+
 //here : file[0]=infile | file[1]=outfile | file[2]=stdin
 int	main(int ac, char **av, char *env[])
 {
@@ -83,7 +85,7 @@ char	**make_av_cmds(int ac, char **av)
 	cmds = (char **)malloc(((ac - modifier) + 1) * sizeof(char *));
 	if (!cmds)
 		return (NULL);
-	cmds[ac -modifier] = NULL;
+	cmds[ac - modifier] = NULL;
 	while (i < (ac - modifier))
 	{
 		cmds[i] = ft_strdup(av[i + (modifier - 1)]);

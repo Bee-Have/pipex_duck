@@ -6,13 +6,14 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:00:12 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/24 14:10:26 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:23:49 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 #ifndef BONUS
+
 int	parsing_manager(int ac, char **av)
 {
 	if (ft_strcmp(av[0], "./pipex") == 1)
@@ -25,6 +26,7 @@ int	parsing_manager(int ac, char **av)
 }
 
 #else
+
 int	parsing_manager(int ac, char **av)
 {
 	if (ft_strcmp(av[0], "./pipex_bonus") == 1)

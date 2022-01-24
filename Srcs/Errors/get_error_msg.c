@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 14:40:21 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/12 14:41:42 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:16:56 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ char	*get_error_args(int erno)
 		error = ft_strdup("List of arguments is incomplete");
 	else if (erno == ERNO_ARGS_NBR_MORE)
 		error = ft_strdup("Too many arguments (For multi pipe feature, "
-							"please use 'make bonus')");
+				"please use 'make bonus')");
 	else if (erno == ERNO_ARGS_NO_BONUS)
 		error = ft_strdup("This executable does not support bonuses "
-						"(please use 'make bonus' for this feature)");
+				"(please use 'make bonus' for this feature)");
 	return (error);
 }
 
@@ -42,7 +42,7 @@ char	*get_error_misc(int erno)
 		error = ft_strdup("Path of outfile is either incorrect or inexistant");
 	else if (erno == ERNO_EMPTY_CMD)
 		error = ft_strdup("One of the commands is empty, please "
-							"enter existing command");
+				"enter existing command");
 	else if (erno == ERNO_PATH)
 		error = ft_strdup("Path for one of the commands does not exist, please"
 				" check all the commands exist or they have an existing path");

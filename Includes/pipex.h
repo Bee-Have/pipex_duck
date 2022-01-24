@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/21 18:48:00 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/24 15:30:18 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 int		main(int ac, char **av, char *env[]);
 
 # ifdef BONUS
+
 char	**get_lines_limiter(char *limiter);
 char	**make_av_cmds(int ac, char **av);
 void	write_here_doc_file(char **here_doc);
@@ -54,23 +55,29 @@ int		parsing_files(int ac, char **av);
 
 //FORK
 # ifndef BONUS
+
 int		fork_manager(int files[2], char **cmds, char *env[]);
 int		fork_cmds(pid_t *child, int files[2], char **cmds, char *env[]);
 void	dup2_children(int index, int pipefd[2], int files[2]);
+
 # else
+
 int		fork_manager(int files[3], char **cmds, char *env[]);
 int		fork_cmds(pid_t *child, int files[3], char **cmds, char *env[]);
 void	dup2_children(int max, int index, int pipefd[2], int files[3]);
+void	transit_pipe(int i, int pipefd[2], int files[3]);
+
 # endif
+
 void	wait_for_children(pid_t *children, int size);
 char	**get_cmd_args(char *cmd);
 int		check_cmd_env(char **cmd, char *env[]);
+char	**get_possible_paths(char *env[]);
 
 //ERRORS
 int		error_manager(int erno);
 char	*get_error_args(int erno);
 char	*get_error_misc(int erno);
 char	*add_prefix_sufix(char *error);
-
 
 #endif

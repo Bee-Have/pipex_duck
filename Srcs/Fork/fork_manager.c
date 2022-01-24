@@ -6,13 +6,14 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:19:52 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/24 14:02:42 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/24 15:25:45 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 #ifndef BONUS
+
 int	fork_manager(int files[2], char **cmds, char *env[])
 {
 	int		len_cmds;
@@ -31,18 +32,15 @@ int	fork_manager(int files[2], char **cmds, char *env[])
 	return (EXIT_SUCCESS);
 }
 
-int	fork_cmds(pid_t *child, int files[2],char **cmds, char *env[])
+int	fork_cmds(pid_t *child, int files[2], char **cmds, char *env[])
 {
 	int		i;
-	int		len;
 	int		pipefd[2];
 	char	**cmd_args;
 
 	i = 0;
 	pipe(pipefd);
-	len = ft_tablen((const char **)cmds);
-	cmd_args = NULL;
-	while (i < len)
+	while (i < ft_tablen((const char **)cmds))
 	{
 		child[i] = fork();
 		if (child[i] == 0)
@@ -55,10 +53,7 @@ int	fork_cmds(pid_t *child, int files[2],char **cmds, char *env[])
 				return (EXIT_FAILURE);
 		}
 		else if (child[i] != 0 && i == 0)
-		{
-			printf("closed infile\n");
 			close(files[0]);
-		}
 		++i;
 	}
 	close(pipefd[0]);
@@ -67,6 +62,7 @@ int	fork_cmds(pid_t *child, int files[2],char **cmds, char *env[])
 }
 
 #else
+
 int	fork_manager(int files[3], char **cmds, char *env[])
 {
 	int		len_cmds;
@@ -86,7 +82,7 @@ int	fork_manager(int files[3], char **cmds, char *env[])
 }
 
 //here : file[0]=infile | file[1]=outfile | file[2]=stdin
-int	fork_cmds(pid_t *child, int files[3],char **cmds, char *env[])
+int	fork_cmds(pid_t *child, int files[3], char **cmds, char *env[])
 {
 	int		i;
 	int		len;
@@ -95,7 +91,6 @@ int	fork_cmds(pid_t *child, int files[3],char **cmds, char *env[])
 
 	i = 0;
 	len = ft_tablen((const char **)cmds);
-	cmd_args = NULL;
 	while (i < len)
 	{
 		pipe(pipefd);
@@ -110,13 +105,7 @@ int	fork_cmds(pid_t *child, int files[3],char **cmds, char *env[])
 				return (EXIT_FAILURE);
 		}
 		else
-		{
-			if (i == 0 && files[0] != NO_INFILE)
-				close(files[0]);
-			dup2(files[2], pipefd[0]);
-			close(pipefd[0]);
-			close(pipefd[1]);
-		}
+			transit_pipe(pipefd, files);
 		++i;
 	}
 	return (EXIT_SUCCESS);
