@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:19:52 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/24 15:25:45 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/24 15:32:06 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	fork_cmds(pid_t *child, int files[3], char **cmds, char *env[])
 				return (EXIT_FAILURE);
 		}
 		else
-			transit_pipe(pipefd, files);
+			transit_pipe(i, pipefd, files);
 		++i;
 	}
 	return (EXIT_SUCCESS);
