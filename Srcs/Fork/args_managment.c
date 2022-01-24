@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:40:09 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/24 15:12:33 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/24 17:40:33 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ char	**get_possible_paths(char *env[])
 	all_paths = ft_substr(tmp, 4, ft_strlen(tmp) - 5);
 	paths_tab = ft_split(all_paths, ':');
 	free(tmp);
-	free(paths_tab);
+	free(all_paths);
 	return (paths_tab);
 }
