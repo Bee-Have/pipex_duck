@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:19:52 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/24 17:45:47 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:56:10 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	fork_cmds(pid_t *child, int files[2], char **cmds, char *env[])
 	return (EXIT_SUCCESS);
 }
 
-#else
+// #else
 
 int	fork_manager(int files[3], char **cmds, char *env[])
 {
@@ -85,19 +85,17 @@ int	fork_manager(int files[3], char **cmds, char *env[])
 int	fork_cmds(pid_t *child, int files[3], char **cmds, char *env[])
 {
 	int		i;
-	int		len;
 	int		pipefd[2];
 	char	**cmd_args;
 
 	i = 0;
-	len = ft_tablen((const char **)cmds);
-	while (i < len)
+	while (i < ft_tablen((const char **)cmds))
 	{
 		pipe(pipefd);
 		child[i] = fork();
 		if (child[i] == 0)
 		{
-			dup2_children(len - 1, i, pipefd, files);
+			dup2_children(ft_tablen((const char **)cmds) - 1, i, pipefd, files);
 			cmd_args = get_cmd_args(cmds[i]);
 			if (check_cmd_env(&cmd_args[0], env) == PATH_OK)
 				execve(cmd_args[0], cmd_args, env);

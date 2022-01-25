@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 13:50:36 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/25 17:04:17 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:13:10 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,11 @@ void	write_here_doc_file(int stdin, char **here_doc)
 	int	i;
 
 	i = 0;
+	(void)stdin;
 	while (here_doc[i])
 	{
-		write(stdin, here_doc[i], ft_strlen(here_doc[i]));
-		write(stdin, "\n", 1);
+		write(STDIN_FILENO, here_doc[i], ft_strlen(here_doc[i]));
+		write(STDIN_FILENO, "\n", 1);
 		++i;
 	}
 	ft_freetab(here_doc);

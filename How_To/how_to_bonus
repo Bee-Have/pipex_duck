@@ -11,3 +11,12 @@ while (ft_strcmp(line, "LIMITER"))
 	gnl(stdin, *line)
 	ft_add_tad(**file, line);
 }
+
+
+add limiter to here_doc -> 
+if (file[0] == NO_INFILE)
+{
+	send limiter && pipe[0] to here_doc_manager
+	here_doc_manager read stdin, find limiter and put everything inside pipe[0]
+	it will also delete first of cmds and make new cmds without limiter
+}
