@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:14:53 by user42            #+#    #+#             */
-/*   Updated: 2022/01/24 18:12:51 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/25 16:34:11 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,13 @@ char	**get_cmd_args(char *cmd)
 int	main(/*int ac, char **av, char *env[]*/)
 {
 	char	*line;
+	int		bs;
 
 	line = NULL;
-	get_next_line(STDIN_FILENO, &line);
+	bs = dup(STDIN_FILENO);
+	get_next_line(bs, &line);
 	printf("line[%s]\n", line);
+	(void)bs;
 	// int		i;
 	// int		i_id;
 	// int		infile;

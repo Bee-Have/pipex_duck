@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/24 15:30:18 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/25 16:57:01 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int		main(int ac, char **av, char *env[]);
 
 # ifdef BONUS
 
-char	**get_lines_limiter(char *limiter);
+char	**get_lines_limiter(int stdin, char *limiter);
 char	**make_av_cmds(int ac, char **av);
-void	write_here_doc_file(char **here_doc);
+void	write_here_doc_file(int stdin, char **here_doc);
 # endif
 
 //PARSING

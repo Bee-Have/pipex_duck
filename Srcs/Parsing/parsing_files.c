@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:13:18 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/24 14:23:34 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:03:24 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	parsing_files(int ac, char **av)
 	int	ret_outfile;
 
 	if (ft_strcmp(av[1], "here_doc") == 0)
-		ret_infile = 0;
+		ret_infile = NO_INFILE;
 	else
 		ret_infile = open(av[1], O_RDONLY);
 	ret_outfile = open(av[ac - 1], O_RDWR);
@@ -62,7 +62,8 @@ int	parsing_files(int ac, char **av)
 			close(ret_infile);
 		return (error_manager(ERNO_OUTFILE));
 	}
-	close(ret_infile);
+	if (ret_infile != NO_INFILE)
+		close(ret_infile);
 	close(ret_outfile);
 	return (EXIT_SUCCESS);
 }

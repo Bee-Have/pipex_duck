@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 13:50:36 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/24 18:20:59 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:04:17 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ int	main(int ac, char **av, char *env[])
 	char	**cmds;
 
 	files[0] = NO_INFILE;
+	files[2] = dup(STDIN_FILENO);
 	if (parsing_manager(ac, av) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (ft_strcmp(av[1], "here_doc") == 0)
 	{
-		printf("here_doc in av\n");
-		write_here_doc_file(get_lines_limiter(av[2]));
+		write_here_doc_file(files[2], get_lines_limiter(files[2], av[2]));
 		files[1] = open(av[ac - 1], O_WRONLY | O_APPEND);
 	}
 	else
@@ -64,7 +64,6 @@ int	main(int ac, char **av, char *env[])
 		files[0] = open(av[1], O_RDONLY);
 		files[1] = open(av[ac - 1], O_WRONLY | O_TRUNC);
 	}
-	files[2] = dup(STDIN_FILENO);
 	cmds = make_av_cmds(ac, av);
 	if (fork_manager(files, cmds, env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
@@ -96,27 +95,20 @@ char	**make_av_cmds(int ac, char **av)
 	return (cmds);
 }
 
-char	**get_lines_limiter(char *limiter)
+char	**get_lines_limiter(int stdin, char *limiter)
 {
 	char	*line;
 	char	*prefix;
 	char	**result;
 
-	// printf("in get limiter in stdin function\n");
-	// printf("limiter[%s]\n", limiter);
 	line = NULL;
 	result = NULL;
-	prefix = ft_strdup(".");
-	// prefix = ft_strdup("pipe here_doc> ");
+	prefix = ft_strdup("pipe here_doc> ");
 	while (ft_strcmp(line, limiter) == 1)
 	{
-		// printf("in loop\n");
 		free(line);
-		// printf("freed line\n");
-		write(1, prefix, ft_strlen(prefix));
-		// printf("wrote in STDIN\n");
-		while (get_next_line(0, &line) == -1)
-			printf("[%s]\n", line);
+		write(STDOUT_FILENO, prefix, ft_strlen(prefix));
+		get_next_line(stdin, &line);
 		result = ft_add_tab(result, line);
 	}
 	free(line);
@@ -124,15 +116,15 @@ char	**get_lines_limiter(char *limiter)
 	return (result);
 }
 
-void	write_here_doc_file(char **here_doc)
+void	write_here_doc_file(int stdin, char **here_doc)
 {
 	int	i;
 
 	i = 0;
 	while (here_doc[i])
 	{
-		write(STDIN_FILENO, here_doc[i], ft_strlen(here_doc[i]));
-		write(STDIN_FILENO, "\n", 1);
+		write(stdin, here_doc[i], ft_strlen(here_doc[i]));
+		write(stdin, "\n", 1);
 		++i;
 	}
 	ft_freetab(here_doc);
