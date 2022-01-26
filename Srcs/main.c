@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 13:50:36 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/25 17:13:10 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/26 17:06:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ int	main(int ac, char **av, char *env[])
 	int		files[3];
 	char	**cmds;
 
+
 	files[0] = NO_INFILE;
 	files[2] = dup(STDIN_FILENO);
 	if (parsing_manager(ac, av) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (ft_strcmp(av[1], "here_doc") == 0)
 	{
-		write_here_doc_file(files[2], get_lines_limiter(files[2], av[2]));
+		// write_here_doc_file(files[2], get_lines_limiter(files[2], av[2]));
 		files[1] = open(av[ac - 1], O_WRONLY | O_APPEND);
 	}
 	else
@@ -67,7 +68,8 @@ int	main(int ac, char **av, char *env[])
 	cmds = make_av_cmds(ac, av);
 	if (fork_manager(files, cmds, env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	ft_freetab(cmds);
+	if (files[0] != NO_INFILE)
+		ft_freetab(cmds);
 	close(files[1]);
 	close(files[2]);
 	return (EXIT_SUCCESS);
@@ -81,8 +83,8 @@ char	**make_av_cmds(int ac, char **av)
 
 	i = 0;
 	modifier = 3;
-	if (ft_strcmp(av[1], "here_doc") == 0)
-		modifier = 4;
+	// if (ft_strcmp(av[1], "here_doc") == 0)
+	// 	modifier = 4;
 	cmds = (char **)malloc(((ac - modifier) + 1) * sizeof(char *));
 	if (!cmds)
 		return (NULL);
@@ -93,42 +95,6 @@ char	**make_av_cmds(int ac, char **av)
 		++i;
 	}
 	return (cmds);
-}
-
-char	**get_lines_limiter(int stdin, char *limiter)
-{
-	char	*line;
-	char	*prefix;
-	char	**result;
-
-	line = NULL;
-	result = NULL;
-	prefix = ft_strdup("pipe here_doc> ");
-	while (ft_strcmp(line, limiter) == 1)
-	{
-		free(line);
-		write(STDOUT_FILENO, prefix, ft_strlen(prefix));
-		get_next_line(stdin, &line);
-		result = ft_add_tab(result, line);
-	}
-	free(line);
-	free(prefix);
-	return (result);
-}
-
-void	write_here_doc_file(int stdin, char **here_doc)
-{
-	int	i;
-
-	i = 0;
-	(void)stdin;
-	while (here_doc[i])
-	{
-		write(STDIN_FILENO, here_doc[i], ft_strlen(here_doc[i]));
-		write(STDIN_FILENO, "\n", 1);
-		++i;
-	}
-	ft_freetab(here_doc);
 }
 
 #endif

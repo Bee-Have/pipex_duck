@@ -20,3 +20,7 @@ if (file[0] == NO_INFILE)
 	here_doc_manager read stdin, find limiter and put everything inside pipe[0]
 	it will also delete first of cmds and make new cmds without limiter
 }
+
+    0   |    1     |    2    |  3   |    4    |   5     |
+./pipex | here_doc | limiter | cmd1 |  cmd2   | outfile |
+./pipex |  infile  |   cmd1  | cmd2 | outfile |

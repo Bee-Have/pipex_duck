@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/25 16:57:01 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/26 16:17:15 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,37 +43,54 @@ int		main(int ac, char **av, char *env[]);
 
 # ifdef BONUS
 
-char	**get_lines_limiter(int stdin, char *limiter);
 char	**make_av_cmds(int ac, char **av);
-void	write_here_doc_file(int stdin, char **here_doc);
 # endif
-
+//
 //PARSING
 int		parsing_manager(int ac, char **av);
 int		parsing_args(int ac, char **av);
 int		parsing_files(int ac, char **av);
-
+//
 //FORK
 # ifndef BONUS
 
 int		fork_manager(int files[2], char **cmds, char *env[]);
 int		fork_cmds(pid_t *child, int files[2], char **cmds, char *env[]);
-void	dup2_children(int index, int pipefd[2], int files[2]);
 
 # else
 
 int		fork_manager(int files[3], char **cmds, char *env[]);
 int		fork_cmds(pid_t *child, int files[3], char **cmds, char *env[]);
+
+# endif
+
+char	**get_cmd_args(char *cmd);
+int		check_cmd_env(char **cmd, char *env[]);
+char	**get_possible_paths(char *env[]);
+//
+//FORK DUP
+# ifndef BONUS
+
+void	dup2_children(int index, int pipefd[2], int files[2]);
+
+# else
+
 void	dup2_children(int max, int index, int pipefd[2], int files[3]);
 void	transit_pipe(int i, int pipefd[2], int files[3]);
 
 # endif
+//
+//FORK UTILS
+# ifdef BONUS
+
+char	**get_lines_limiter(char *limiter);
+void	write_here_doc_file(int stdin, char **here_doc);
+void	here_doc_manager(char	***cmds, int pipefd[2]);
+
+# endif
 
 void	wait_for_children(pid_t *children, int size);
-char	**get_cmd_args(char *cmd);
-int		check_cmd_env(char **cmd, char *env[]);
-char	**get_possible_paths(char *env[]);
-
+//
 //ERRORS
 int		error_manager(int erno);
 char	*get_error_args(int erno);
