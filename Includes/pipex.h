@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/26 16:17:15 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/27 16:40:53 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ void	transit_pipe(int i, int pipefd[2], int files[3]);
 //FORK UTILS
 # ifdef BONUS
 
-char	**get_lines_limiter(char *limiter);
+char	**get_lines_limiter(char *limiter, int cmd_len);
 void	write_here_doc_file(int stdin, char **here_doc);
-void	here_doc_manager(char	***cmds, int pipefd[2]);
+void	here_doc_manager(char	***cmds, int pipefd[2], int files[3]);
 
 # endif
 

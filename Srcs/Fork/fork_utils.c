@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 17:51:39 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/26 17:07:21 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/27 17:38:18 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,47 @@
 
 #ifdef BONUS
 
-void	here_doc_manager(char	***cmds, int pipefd[2])
+void	here_doc_manager(char	***cmds, int pipefd[2], int files[3])
 {
 	char	*limiter;
 	char	**tmp;
 	char	**lines_limiter;
 
+	// printf("in here_doc manager\n");
 	limiter = ft_strdup((*cmds)[0]);
 	tmp = ft_erase(*cmds, 1, 1);
 	ft_freetab(*cmds);
 	*cmds = tmp;
-	ft_print_tab(*cmds);
-	lines_limiter = get_lines_limiter(limiter);
-	write_here_doc_file(pipefd[0], lines_limiter);
+	// ft_print_tab(*cmds);
+	lines_limiter = get_lines_limiter(limiter,
+					ft_tablen((const char **)*cmds));
+	write_here_doc_file(pipefd[1], lines_limiter);
 	free(limiter);
-	// ft_freetab(lines_limiter);
+	ft_freetab(lines_limiter);
+	(void)files;
+	// dup2(pipefd[0], files[2]);
+	// transit_pipe(0, pipefd, files);
 }
 
-char	**get_lines_limiter(char *limiter)
+char	**get_lines_limiter(char *limiter, int cmd_len)
 {
 	char	*line;
 	char	*prefix;
 	char	**result;
+	int		i;
 
 	line = NULL;
 	result = NULL;
-	prefix = ft_strdup("pipe here_doc> ");
+	i = 0;
+	prefix = ft_strdup("here_doc> ");
+	while (i < cmd_len - 1)
+	{
+		free(line);
+		line = ft_strjoin("pipe ", prefix);
+		free(prefix);
+		prefix = ft_strdup(line);
+		++i;
+	}
 	while (ft_strcmp(line, limiter) == 1)
 	{
 		free(line);
@@ -63,7 +78,6 @@ void	write_here_doc_file(int fd, char **here_doc)
 		write(fd, "\n", 1);
 		++i;
 	}
-	ft_freetab(here_doc);
 }
 
 #endif

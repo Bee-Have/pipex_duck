@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork_manager.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:19:52 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/26 16:14:25 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/27 16:40:58 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	fork_cmds(pid_t *child, int files[3], char **cmds, char *env[])
 	{
 		pipe(pipefd);
 		if (i == 0 && files[0] == NO_INFILE)
-			here_doc_manager(&cmds, pipefd);
+			here_doc_manager(&cmds, pipefd, files);
 		child[i] = fork();
 		if (child[i] == 0)
 		{
