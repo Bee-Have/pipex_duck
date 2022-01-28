@@ -2,7 +2,7 @@ NAME = pipex
 NAME_BONUS = pipex_bonus
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
 DEBUG =
 ifdef DEBUG

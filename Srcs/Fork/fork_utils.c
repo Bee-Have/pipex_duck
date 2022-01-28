@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 17:51:39 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/27 17:38:18 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/28 18:50:33 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,23 @@
 
 #ifdef BONUS
 
-void	here_doc_manager(char	***cmds, int pipefd[2], int files[3])
+void	here_doc_manager(char	***cmds, int (*pipehd)[2])
 {
 	char	*limiter;
 	char	**tmp;
 	char	**lines_limiter;
 
-	// printf("in here_doc manager\n");
 	limiter = ft_strdup((*cmds)[0]);
-	tmp = ft_erase(*cmds, 1, 1);
+	tmp = ft_erase(*cmds, 0, 1);
 	ft_freetab(*cmds);
 	*cmds = tmp;
-	// ft_print_tab(*cmds);
+	pipe(*pipehd);
 	lines_limiter = get_lines_limiter(limiter,
 					ft_tablen((const char **)*cmds));
-	write_here_doc_file(pipefd[1], lines_limiter);
+	write_here_doc_file((*pipehd)[1], lines_limiter);
+	close((*pipehd)[1]);
 	free(limiter);
 	ft_freetab(lines_limiter);
-	(void)files;
-	// dup2(pipefd[0], files[2]);
-	// transit_pipe(0, pipefd, files);
 }
 
 char	**get_lines_limiter(char *limiter, int cmd_len)
@@ -62,6 +59,7 @@ char	**get_lines_limiter(char *limiter, int cmd_len)
 		get_next_line(STDIN_FILENO, &line);
 		result = ft_add_tab(result, line);
 	}
+	get_next_line(-42, NULL);
 	free(line);
 	free(prefix);
 	return (result);
@@ -88,9 +86,10 @@ void	wait_for_children(pid_t *children, int size)
 	int	ret_child;
 
 	i = 0;
-	ret_child = 0;
+	printf("size-[%d]\n", size);
 	while (i < size)
 	{
+		ret_child = 0;
 		waitpid(children[i], &ret_child, WUNTRACED);
 		++i;
 	}
