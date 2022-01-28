@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 13:50:36 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/28 18:39:25 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/28 18:59:47 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	main(int ac, char **av, char *env[])
 	int		files[3];
 	char	**cmds;
 
-
 	files[0] = NO_INFILE;
 	files[2] = dup(STDIN_FILENO);
 	if (parsing_manager(ac, av) == EXIT_FAILURE)
@@ -65,7 +64,6 @@ int	main(int ac, char **av, char *env[])
 	cmds = make_av_cmds(ac, av);
 	if (fork_manager(files, &cmds, env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	// if (files[0] != NO_INFILE)
 	ft_freetab(cmds);
 	close(files[1]);
 	close(files[2]);
@@ -80,8 +78,6 @@ char	**make_av_cmds(int ac, char **av)
 
 	i = 0;
 	modifier = 3;
-	// if (ft_strcmp(av[1], "here_doc") == 0)
-	// 	modifier = 4;
 	cmds = (char **)malloc(((ac - modifier) + 1) * sizeof(char *));
 	if (!cmds)
 		return (NULL);

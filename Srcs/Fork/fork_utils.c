@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 17:51:39 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/28 18:50:33 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/28 19:21:24 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 #ifdef BONUS
 
-void	here_doc_manager(char	***cmds, int (*pipehd)[2])
+void	here_doc_manager(char	***cmds)
 {
 	char	*limiter;
 	char	**tmp;
 	char	**lines_limiter;
+	int		pipehd[2];
 
 	limiter = ft_strdup((*cmds)[0]);
 	tmp = ft_erase(*cmds, 0, 1);
@@ -26,8 +27,8 @@ void	here_doc_manager(char	***cmds, int (*pipehd)[2])
 	*cmds = tmp;
 	pipe(*pipehd);
 	lines_limiter = get_lines_limiter(limiter,
-					ft_tablen((const char **)*cmds));
-	write_here_doc_file((*pipehd)[1], lines_limiter);
+			ft_tablen((const char **)*cmds));
+	write_here_doc_file(pipehd[1], lines_limiter);
 	close((*pipehd)[1]);
 	free(limiter);
 	ft_freetab(lines_limiter);
@@ -35,23 +36,15 @@ void	here_doc_manager(char	***cmds, int (*pipehd)[2])
 
 char	**get_lines_limiter(char *limiter, int cmd_len)
 {
+	int		i;
 	char	*line;
 	char	*prefix;
 	char	**result;
-	int		i;
 
 	line = NULL;
 	result = NULL;
 	i = 0;
-	prefix = ft_strdup("here_doc> ");
-	while (i < cmd_len - 1)
-	{
-		free(line);
-		line = ft_strjoin("pipe ", prefix);
-		free(prefix);
-		prefix = ft_strdup(line);
-		++i;
-	}
+	prefix = make_here_doc_prefix(cmd_len - 1);
 	while (ft_strcmp(line, limiter) == 1)
 	{
 		free(line);
@@ -63,6 +56,27 @@ char	**get_lines_limiter(char *limiter, int cmd_len)
 	free(line);
 	free(prefix);
 	return (result);
+}
+
+char	**make_here_doc_prefix(int cmd_len)
+{
+	int		i;
+	char	tmp;
+	char	*prefix;
+
+	i = 0;
+	tmp = NULL;
+	prefix = ft_strdup("here_doc> ");
+	while (i < cmd_len)
+	{
+		free(tmp);
+		tmp = ft_strjoin("pipe ", prefix);
+		free(prefix);
+		prefix = ft_strdup(tmp);
+		++i;
+	}
+	free(tmp)
+	return (prefix);
 }
 
 void	write_here_doc_file(int fd, char **here_doc)
