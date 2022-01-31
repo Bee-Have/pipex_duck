@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:31:41 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/24 14:10:01 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/31 12:29:56 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	error_manager(int erno)
 		msg = get_error_args(erno);
 	error = add_prefix_sufix(msg);
 	free(msg);
-	ft_putstr(error);
+	write(STDERR_FILENO, error, ft_strlen(error));
 	free(error);
 	return (EXIT_FAILURE);
 }

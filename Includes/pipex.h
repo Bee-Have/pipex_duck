@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/28 19:10:40 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/31 12:10:46 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,15 @@ void	dup2_children(int max, int index, int pipefd[2], int files[3]);
 void	transit_pipe(int i, int pipefd[2], int pipehd[2], int files[3]);
 
 # endif
+
+void	dup_close_fd(int fd, int std);
+
 //
 //FORK UTILS
 # ifdef BONUS
 
 char	**get_lines_limiter(char *limiter, int cmd_len);
-char	**make_here_doc_prefix(int cmd_len);
+char	*make_here_doc_prefix(int cmd_len);
 void	write_here_doc_file(int stdin, char **here_doc);
 void	here_doc_manager(char	***cmds, int (*pipehd)[2]);
 

@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:19:52 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/28 19:15:56 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/01/31 12:46:35 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ int	fork_cmds(pid_t *child, int files[2], char **cmds, char *env[])
 		{
 			dup2_children(i, pipefd, files);
 			cmd_args = get_cmd_args(cmds[i]);
-			if (check_cmd_env(&cmd_args[0], env) == PATH_OK)
-				execve(cmd_args[0], cmd_args, env);
-			else
+			if (check_cmd_env(cmd_args, env) == PATH_KO)
 				return (EXIT_FAILURE);
 		}
 		else if (child[i] != 0 && i == 0)
@@ -61,7 +59,7 @@ int	fork_cmds(pid_t *child, int files[2], char **cmds, char *env[])
 	return (EXIT_SUCCESS);
 }
 
-// #else
+#else
 
 int	fork_manager(int files[3], char ***cmds, char *env[])
 {
@@ -88,23 +86,21 @@ int	fork_cmds(pid_t *child, int files[3], char ***cmds, char *env[])
 {
 	int		i;
 	int		pipefd[2];
-	char	**cmd_args;
+	int		pipehd[2];
 
 	i = 0;
 	while (i < ft_tablen((const char **)*cmds))
 	{
 		pipe(pipefd);
+		if (i == 0 && files[0] == NO_INFILE)
+			here_doc_manager(cmds, &pipehd);
 		child[i] = fork();
 		if (child[i] == 0)
 		{
-			if (i == 0 && files[0] == NO_INFILE)
-				here_doc_manager(cmds);
-			dup2_children(ft_tablen((const char **)*cmds) - 1, i,
-				pipefd, files);
-			cmd_args = get_cmd_args((*cmds)[i]);
-			if (check_cmd_env(&cmd_args[0], env) == PATH_OK)
-				execve(cmd_args[0], cmd_args, env);
-			else
+			if (files[0] == NO_INFILE)
+				dup_close_fd(pipehd[0], 0);
+			dup2_children(ft_tablen((const char **)*cmds), i, pipefd, files);
+			if (check_cmd_env(get_cmd_args((*cmds)[i]), env) == PATH_KO)
 				return (EXIT_FAILURE);
 		}
 		else

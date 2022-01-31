@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_managment.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:40:09 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/26 15:48:56 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/31 11:49:05 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ int	check_cmd_env(char **cmd, char *env[])
 	while (paths_tab[i])
 	{
 		tmp = ft_strjoin(paths_tab[i], "/");
-		path = ft_strjoin(tmp, (*cmd));
+		path = ft_strjoin(tmp, cmd[0]);
 		free(tmp);
 		if (access(path, X_OK) == 0)
 		{
-			free((*cmd));
+			free(cmd[0]);
 			ft_freetab(paths_tab);
-			(*cmd) = path;
-			return (PATH_OK);
+			cmd[0] = path;
+			execve(cmd[0], cmd, env);
 		}
 		free(path);
 		++i;
