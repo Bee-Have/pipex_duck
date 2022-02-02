@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:13:18 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/02 13:43:00 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/02 18:49:43 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	parsing_files(int ac, char **av)
 	{
 		if (ret_outfile != -1)
 			close(ret_outfile);
-		return (error_manager(ERNO_INFILE));
+		return (error_manager(ERNO_INFILE, av[1]));
 	}
 	close(ret_infile);
 	close(ret_outfile);
@@ -48,7 +48,7 @@ int	parsing_files(int ac, char **av)
 	{
 		if (ret_outfile != -1)
 			close(ret_outfile);
-		return (error_manager(ERNO_INFILE));
+		return (error_manager(ERNO_INFILE, av[1]));
 	}
 	if (ret_infile != NO_INFILE)
 		close(ret_infile);

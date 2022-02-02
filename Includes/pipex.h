@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/02/02 13:20:19 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/02 18:44:51 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,12 @@ void	here_doc_manager(char	***cmds, int (*pipehd)[2]);
 
 # endif
 
-void	wait_for_children(pid_t *children, int size);
+int		wait_for_children(pid_t *children, int size);
 //
 //ERRORS
-int		error_manager(int erno);
+int		error_manager(int erno, char *str);
 char	*get_error_args(int erno);
-char	*get_error_misc(int erno);
+char	*get_error_misc(int erno, char *str);
 char	*add_prefix_sufix(char *error);
 
 #endif

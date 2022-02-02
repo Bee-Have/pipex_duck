@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 17:51:39 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/31 13:00:58 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/02 16:47:50 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	write_here_doc_file(int fd, char **here_doc)
 
 #endif
 
-void	wait_for_children(pid_t *children, int size)
+int	wait_for_children(pid_t *children, int size)
 {
 	int	i;
 	int	ret_child;
@@ -103,4 +103,6 @@ void	wait_for_children(pid_t *children, int size)
 		waitpid(children[i], &ret_child, WUNTRACED);
 		++i;
 	}
+	free(children);
+	return (ret_child);
 }

@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 13:50:36 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/02 13:33:32 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/02 18:53:50 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ int	main(int ac, char **av, char *env[])
 	int		files[2];
 	int		i;
 	char	**cmds;
+	int		ret;
 
 	i = 0;
 	if (parsing_manager(ac, av) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	files[0] = open(av[1], O_RDONLY);
-	files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_TRUNC);
+	files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_TRUNC, 777);
 	cmds = (char **)malloc(((ac - 3) + 1) * sizeof(char *));
 	if (!cmds)
 		return (EXIT_FAILURE);
@@ -34,12 +35,13 @@ int	main(int ac, char **av, char *env[])
 		cmds[i] = ft_strdup(av[i + 2]);
 		++i;
 	}
-	if (fork_manager(files, cmds, env) == EXIT_FAILURE)
+	ret = fork_manager(files, cmds, env);
+	if (ret == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	ft_freetab(cmds);
 	close(files[0]);
 	close(files[1]);
-	return (EXIT_SUCCESS);
+	return (ret);
 }
 
 #else

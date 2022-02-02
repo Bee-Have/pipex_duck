@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 14:40:21 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/02 13:21:43 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/02 19:02:34 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,33 @@ char	*get_error_args(int erno)
 	return (error);
 }
 
-char	*get_error_misc(int erno)
+char	*get_error_misc(int erno, char *str, int *err)
 {
+	char	*res;
 	char	*error;
 
+	error = NULL;
 	if (erno == ERNO_NAME)
 		error = ft_strdup("Wrong name for executable");
 	else if (erno == ERNO_INFILE)
-		error = ft_strdup("Path of infile is either incorrect or inexistant");
+	{
+		if (errno == 2)
+			error = ft_strdup(": No such file or directory");
+		if (errno == 13)
+			error = ft_strdup(": Permission denied");
+	}
 	else if (erno == ERNO_EMPTY_CMD)
+	{
 		error = ft_strdup("One of the commands is empty, please "
 				"enter existing command");
+		*err = 127;
+	}
 	else if (erno == ERNO_PATH)
-		error = ft_strdup("Path for one of the commands does not exist, please"
-				" check all the commands exist or they have an existing path");
-	return (error);
+	{
+		if (errno == 2)
+			error = ft_strdup(": command not found");
+		*err = 127;
+	}
+	res = ft_strjoin(str, error);
+	return (res);
 }

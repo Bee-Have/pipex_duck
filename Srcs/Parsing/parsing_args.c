@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:12:37 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/25 16:43:42 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/02 18:46:28 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 int	parsing_args(int ac, char **av)
 {
 	if (ft_strcmp(av[1], "here_doc") == 0)
-		return (error_manager(ERNO_ARGS_NO_BONUS));
+		return (error_manager(ERNO_ARGS_NO_BONUS, NULL));
 	if (ac <= 1)
-		return (error_manager(ERNO_NO_ARGS));
+		return (error_manager(ERNO_NO_ARGS, NULL));
 	if (ac < 5)
-		return (error_manager(ERNO_ARGS_NBR_LESS));
+		return (error_manager(ERNO_ARGS_NBR_LESS, NULL));
 	if (ac > 5)
-		return (error_manager(ERNO_ARGS_NBR_MORE));
+		return (error_manager(ERNO_ARGS_NBR_MORE, NULL));
 	return (EXIT_SUCCESS);
 }
 
@@ -37,9 +37,9 @@ int	parsing_args(int ac, char **av)
 	if (ft_strcmp(av[1], "here_doc") == 0)
 		offset = 1;
 	if (ac <= 1)
-		return (error_manager(ERNO_NO_ARGS));
+		return (error_manager(ERNO_NO_ARGS, NULL));
 	if (ac < (5 + offset))
-		return (error_manager(ERNO_ARGS_NBR_LESS));
+		return (error_manager(ERNO_ARGS_NBR_LESS, NULL));
 	return (EXIT_SUCCESS);
 }
 

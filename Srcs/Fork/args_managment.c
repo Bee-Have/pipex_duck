@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:40:09 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/02 13:40:09 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/02 18:50:36 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**get_cmd_args(char *cmd)
 
 	if (!cmd)
 	{
-		error_manager(ERNO_EMPTY_CMD);
+		error_manager(ERNO_EMPTY_CMD, NULL);
 		return (NULL);
 	}
 	args = ft_split(cmd, ' ');
@@ -49,7 +49,7 @@ int	check_cmd_env(char **cmd, char *env[])
 		++i;
 	}
 	ft_freetab(paths_tab);
-	return (error_manager(ERNO_PATH));
+	return (error_manager(ERNO_PATH, cmd[0]));
 }
 
 char	**get_possible_paths(char *env[])
