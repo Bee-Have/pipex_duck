@@ -3,8 +3,6 @@ Includes
 Libs
 Makefile
 Objs
-Objs_Bonus
 pipex
-pipex_bonus
 Srcs
 Test_Files
