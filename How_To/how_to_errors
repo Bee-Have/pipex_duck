@@ -9,3 +9,24 @@ Usage : [./]pipex infile cmd1 cmd2 outfile
 
 Error : "the error message here"
 Usage : [./]pipex_bonus {[here_doc LIMITER] || [infile]} cmd1 cmd2 [cmd3 ect...] outfile
+
+
+
+
+upon error, send str for what caused the error (cmd, infile)
+
+recieve error :
+
+	if the error is 42-pipex specific
+		-specific message
+		-return EXIT_FAILURE
+
+	if the error is bash specific
+		-check errno
+			-depending on errno :
+				-print same message as bash
+				-return same int as bash
+
+if no error :
+	-return result of waitpid of last child
+
