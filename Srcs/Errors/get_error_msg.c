@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 14:40:21 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/24 14:16:56 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:21:43 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ char	*get_error_misc(int erno)
 		error = ft_strdup("Wrong name for executable");
 	else if (erno == ERNO_INFILE)
 		error = ft_strdup("Path of infile is either incorrect or inexistant");
-	else if (erno == ERNO_OUTFILE)
-		error = ft_strdup("Path of outfile is either incorrect or inexistant");
 	else if (erno == ERNO_EMPTY_CMD)
 		error = ft_strdup("One of the commands is empty, please "
 				"enter existing command");

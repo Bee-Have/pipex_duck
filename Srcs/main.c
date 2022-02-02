@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 13:50:36 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/31 12:45:08 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:23:37 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int ac, char **av, char *env[])
 	if (parsing_manager(ac, av) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	files[0] = open(av[1], O_RDONLY);
-	files[1] = open(av[ac - 1], O_WRONLY | O_TRUNC);
+	files[1] = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC);
 	cmds = (char **)malloc(((ac - 3) + 1) * sizeof(char *));
 	if (!cmds)
 		return (EXIT_FAILURE);
@@ -55,11 +55,11 @@ int	main(int ac, char **av, char *env[])
 	if (parsing_manager(ac, av) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (ft_strcmp(av[1], "here_doc") == 0)
-		files[1] = open(av[ac - 1], O_WRONLY | O_APPEND);
+		files[1] = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND);
 	else
 	{
 		files[0] = open(av[1], O_RDONLY);
-		files[1] = open(av[ac - 1], O_WRONLY | O_TRUNC);
+		files[1] = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC);
 	}
 	cmds = make_av_cmds(ac, av);
 	if (fork_manager(files, &cmds, env) == EXIT_FAILURE)

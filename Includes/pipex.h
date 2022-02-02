@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/01/31 12:10:46 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:20:19 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 
 # define ERNO_NAME 0
 # define ERNO_INFILE 1
-# define ERNO_OUTFILE 2
 # define ERNO_NO_ARGS 3
 # define ERNO_ARGS_NBR_LESS 4
 # define ERNO_ARGS_NBR_MORE 5
