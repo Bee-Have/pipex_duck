@@ -2,3 +2,5 @@ OK -Fix open O_CREAT permission of file error
 KO -Fix error message
 KO -Fix error return program value
 KO -Fix program return value compared to bash
+
+KO -Delete whole error system and restart it with clear idea of how
