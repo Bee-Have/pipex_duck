@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:13:18 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/02 18:49:43 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:54:21 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,22 @@
 int	parsing_files(int ac, char **av)
 {
 	int	ret_infile;
-	int	ret_outfile;
+	int	ret_r_outfile;
+	int	ret_w_outfile;
+	int	ret_f_outfile;
 
-	ret_infile = open(av[1], O_RDONLY);
-	ret_outfile = open(av[ac - 1], O_RDWR);
+	ret_infile = access(av[1], F_OK);
 	if (ret_infile == -1)
-	{
-		if (ret_outfile != -1)
-			close(ret_outfile);
 		return (error_manager(ERNO_INFILE, av[1]));
-	}
-	close(ret_infile);
-	close(ret_outfile);
+	ret_infile = access(av[1], R_OK);
+	if (ret_infile == -1)
+		return (error_manager(ERNO_PERMISSION, av[1]));
+
+	ret_r_outfile = access(av[ac - 1], R_OK);
+	ret_w_outfile = access(av[ac - 1], W_OK);
+	ret_f_outfile = access(av[ac - 1], F_OK);
+	if ((ret_r_outfile == -1 || ret_w_outfile == -1) && ret_f_outfile != -1)
+		return (error_manager(ERNO_PERMISSION, av[ac - 1]));
 	return (EXIT_SUCCESS);
 }
 

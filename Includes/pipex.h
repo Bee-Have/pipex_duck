@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/02/02 18:44:51 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:38:30 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@
 
 # define NO_INFILE -2
 
-# define ERNO_NAME 0
-# define ERNO_INFILE 1
-# define ERNO_NO_ARGS 3
-# define ERNO_ARGS_NBR_LESS 4
-# define ERNO_ARGS_NBR_MORE 5
-# define ERNO_ARGS_NO_BONUS 6
-# define ERNO_EMPTY_CMD 7
-# define ERNO_PATH 8
+# define ERNO_NAME 1
+# define ERNO_INFILE 2
+# define ERNO_PERMISSION 3
+# define ERNO_NO_ARGS 4
+# define ERNO_ARGS_NBR_LESS 5
+# define ERNO_ARGS_NBR_MORE 6
+# define ERNO_ARGS_NO_BONUS 7
+# define ERNO_EMPTY_CMD 8
+# define ERNO_PATH 9
 
 //MAIN
 int		main(int ac, char **av, char *env[]);
@@ -97,7 +98,7 @@ int		wait_for_children(pid_t *children, int size);
 //ERRORS
 int		error_manager(int erno, char *str);
 char	*get_error_args(int erno);
-char	*get_error_misc(int erno, char *str);
+char	*get_error_misc(int erno, char *str, int *err);
 char	*add_prefix_sufix(char *error);
 
 #endif

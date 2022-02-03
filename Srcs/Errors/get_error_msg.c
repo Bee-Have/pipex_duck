@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 14:40:21 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/02 19:02:34 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/03 14:10:26 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,18 @@ char	*get_error_args(int erno)
 char	*get_error_misc(int erno, char *str, int *err)
 {
 	char	*res;
+	char	*tmp;
 	char	*error;
 
 	error = NULL;
+	tmp = NULL;
+	*err = 2;
 	if (erno == ERNO_NAME)
 		error = ft_strdup("Wrong name for executable");
 	else if (erno == ERNO_INFILE)
-	{
-		if (errno == 2)
-			error = ft_strdup(": No such file or directory");
-		if (errno == 13)
-			error = ft_strdup(": Permission denied");
-	}
+		error = ft_strdup(": No such file or directory");
+	else if (erno == ERNO_PERMISSION)
+		error = ft_strdup(": Permission denied");
 	else if (erno == ERNO_EMPTY_CMD)
 	{
 		error = ft_strdup("One of the commands is empty, please "
@@ -53,10 +53,14 @@ char	*get_error_misc(int erno, char *str, int *err)
 	}
 	else if (erno == ERNO_PATH)
 	{
-		if (errno == 2)
-			error = ft_strdup(": command not found");
+		tmp = ft_strjoin("Command \'", str);
+		error = ft_strjoin(tmp, "\' not found");
+		free(tmp);
 		*err = 127;
+		res = ft_strdup(error);
 	}
-	res = ft_strjoin(str, error);
+	if (erno != ERNO_PATH)
+		res = ft_strjoin(str, error);
+	free(error);
 	return (res);
 }

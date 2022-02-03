@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:19:52 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/02 18:55:58 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/03 15:57:29 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,30 @@
 int	fork_manager(int files[2], char **cmds, char *env[])
 {
 	int		len_cmds;
-	int		ret_fork;
+	int		wait_ret;
 	pid_t	*child;
 
 	len_cmds = ft_tablen((const char **)cmds);
 	child = (pid_t *)malloc(len_cmds * sizeof(pid_t));
 	if (!child)
 		return (EXIT_FAILURE);
-	ret_fork = fork_cmds(child, files, cmds, env);
-	if (ret_fork == EXIT_FAILURE)
-		return (errno);
-	return (wait_for_children(child, len_cmds));
+	fork_cmds(child, files, cmds, env);
+	wait_ret = wait_for_children(child, len_cmds);
+	if (wait_ret == 32512)
+		return (127);
+	return (wait_ret);
 }
 
 int	fork_cmds(pid_t *child, int files[2], char **cmds, char *env[])
 {
 	int		i;
 	int		pipefd[2];
+	int		ret;
 	char	**cmd_args;
 
 	i = 0;
 	pipe(pipefd);
+	ret = EXIT_SUCCESS;
 	while (i < ft_tablen((const char **)cmds))
 	{
 		child[i] = fork();
@@ -45,8 +48,14 @@ int	fork_cmds(pid_t *child, int files[2], char **cmds, char *env[])
 		{
 			dup2_children(i, pipefd, files);
 			cmd_args = get_cmd_args(cmds[i]);
-			if (check_cmd_env(cmd_args, env) != PATH_OK)
-				return (EXIT_FAILURE);
+			ret = check_cmd_env(cmd_args, env);
+			if (ret != PATH_OK)
+			{
+				ft_freetab(cmd_args);
+				free(child);
+				ret = 127;
+				exit(127);
+			}
 		}
 		else if (child[i] != 0 && i == 0)
 			close(files[0]);
@@ -54,7 +63,7 @@ int	fork_cmds(pid_t *child, int files[2], char **cmds, char *env[])
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);
-	return (EXIT_SUCCESS);
+	return (ret);
 }
 
 #else
