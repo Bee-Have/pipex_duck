@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:33:24 by amarini-          #+#    #+#             */
-/*   Updated: 2022/01/31 12:42:13 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/03 17:48:36 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,31 @@
 
 void	dup2_children(int index, int pipefd[2], int files[2])
 {
+	int	tmppipe[2];
+
 	if (index == 0)
 	{
-		dup_close_fd(files[0], 0);
+		if (files[0] == -1)
+		{
+			pipe(tmppipe);
+			dup_close_fd(tmppipe[0], 0);
+			close(tmppipe[1]);
+		}
+		else
+			dup_close_fd(files[0], 0);
 		dup_close_fd(pipefd[1], 1);
 	}
 	else
 	{
 		dup_close_fd(pipefd[0], 0);
-		dup_close_fd(files[1], 1);
+		if (files[1] == -1)
+		{
+			pipe(tmppipe);
+			dup_close_fd(tmppipe[1], 1);
+			close(tmppipe[0]);
+		}
+		else
+			dup_close_fd(files[1], 1);
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);
@@ -36,17 +52,32 @@ void	dup2_children(int index, int pipefd[2], int files[2])
 //here : file[0]=infile | file[1]=outfile | file[2]=stdin
 void	dup2_children(int max, int index, int pipefd[2], int files[3])
 {
+	int	tmppipe[2];
+
 	--max;
 	if (index == 0)
 	{
-		if (files[0] != NO_INFILE)
+		if (files[0] == -1)
+		{
+			pipe(tmppipe);
+			dup_close_fd(tmppipe[0], 0);
+			close(tmppipe[1]);
+		}
+		else if (files[0] != NO_INFILE)
 			dup_close_fd(files[0], 0);
 		dup_close_fd(pipefd[1], 1);
 	}
 	else if (index == max)
 	{
 		dup_close_fd(files[2], 0);
-		dup_close_fd(files[1], 1);
+		if (files[1] == -1)
+		{
+			pipe(tmppipe);
+			dup_close_fd(tmppipe[1], 1);
+			close(tmppipe[0]);
+		}
+		else
+			dup_close_fd(files[1], 1);
 	}
 	else
 	{

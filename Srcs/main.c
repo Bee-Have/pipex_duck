@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 13:50:36 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/03 16:04:11 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/03 17:49:26 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ int	main(int ac, char **av, char *env[])
 //here : file[0]=infile | file[1]=outfile | file[2]=stdin
 int	main(int ac, char **av, char *env[])
 {
+	int		ret;
 	int		files[3];
 	char	**cmds;
 
 	files[0] = NO_INFILE;
 	files[2] = dup(STDIN_FILENO);
 	if (parsing_manager(ac, av) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		ret = 0;
 	if (ft_strcmp(av[1], "here_doc") == 0)
 		files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_APPEND);
 	else
@@ -62,12 +63,11 @@ int	main(int ac, char **av, char *env[])
 		files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_TRUNC);
 	}
 	cmds = make_av_cmds(ac, av);
-	if (fork_manager(files, &cmds, env) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	ret = fork_manager(files, &cmds, env);
 	ft_freetab(cmds);
 	close(files[1]);
 	close(files[2]);
-	return (EXIT_SUCCESS);
+	return (ret);
 }
 
 char	**make_av_cmds(int ac, char **av)

@@ -22,9 +22,9 @@ INCLUDES = -I$(LIBFT_DIR)/Includes -I$(LIBGNL_DIR)/Includes -I$(INC_DIR)
 vpath %.c $(foreach dir, $(SRCS_DIR), $(dir):)
 
 SRCS = main.c \
-	parsing_manager.c parsing_args.c parsing_files.c \
-	fork_manager.c fork_dup.c fork_utils.c args_managment.c \
-	error_manager.c get_error_msg.c error_prefix_sufix.c
+		parsing_manager.c parsing_args.c parsing_files.c \
+		fork_manager.c fork_dup.c fork_utils.c args_managment.c \
+		error_manager.c get_error_msg.c error_prefix_sufix.c
 
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
@@ -37,39 +37,39 @@ bonus: $(LIBFT_DIR)/libft.a $(LIBGNL_DIR)/libgetfile.a $(NAME_BONUS)
 both: $(LIBFT_DIR)/libft.a $(LIBGNL_DIR)/libgetfile.a $(NAME) $(NAME_BONUS)
 
 $(LIBFT_DIR)/libft.a:
-	make -C $(LIBFT_DIR) all
+		make -C $(LIBFT_DIR) all
 
 $(LIBGNL_DIR)/libgetfile.a:
-	make -C $(LIBGNL_DIR) all
+		make -C $(LIBGNL_DIR) all
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
+		$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 
 $(NAME_BONUS): $(OBJS_BONUS)
-	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
+		$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 
 $(OBJS_DIR)/%.o: %.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+		mkdir -p $(dir $@)
+		$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(OBJS_DIR_BONUS)/%.o: %.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -D BONUS=1 $(INCLUDES) -c $< -o $@
+		mkdir -p $(dir $@)
+		$(CC) $(CFLAGS) -D BONUS=1 $(INCLUDES) -c $< -o $@
 
 re: fclean all
 
 allre: cleanall all
 
 clean:
-	rm -rf $(OBJS_DIR)
-	rm -rf $(OBJS_DIR_BONUS)
+		rm -rf $(OBJS_DIR)
+		rm -rf $(OBJS_DIR_BONUS)
 
 fclean: clean
-	rm -rf $(NAME)
-	rm -rf $(NAME_BONUS)
+		rm -rf $(NAME)
+		rm -rf $(NAME_BONUS)
 
 cleanall: fclean
-	make -C $(LIBFT_DIR) fclean
-	make -C $(LIBGNL_DIR) fclean
+		make -C $(LIBFT_DIR) fclean
+		make -C $(LIBGNL_DIR) fclean
 
 .PHONY : fclean clean re both bonus all
