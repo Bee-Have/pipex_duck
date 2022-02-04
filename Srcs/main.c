@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 13:50:36 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/03 17:49:26 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/04 19:10:55 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ int	main(int ac, char **av, char *env[])
 	if (parsing_manager(ac, av) == EXIT_FAILURE)
 		ret = 0;
 	if (ft_strcmp(av[1], "here_doc") == 0)
-		files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_APPEND);
+		files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_APPEND, 0777);
 	else
 	{
 		files[0] = open(av[1], O_RDONLY);
-		files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_TRUNC);
+		files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_TRUNC, 0777);
 	}
 	cmds = make_av_cmds(ac, av);
 	ret = fork_manager(files, &cmds, env);

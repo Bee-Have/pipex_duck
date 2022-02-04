@@ -23,9 +23,9 @@ vpath %.c $(foreach dir, $(SRCS_DIR), $(dir):)
 
 SRCS = main.c \
 		parsing_manager.c parsing_args.c parsing_files.c \
-		fork_manager.c fork_dup.c fork_utils.c args_managment.c \
+		fork_manager.c fork_dup.c fork_utils.c here_doc_manager.c \
+		args_managment.c \
 		error_manager.c get_error_msg.c error_prefix_sufix.c
-
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:.c=.o))
 OBJS_BONUS = $(addprefix $(OBJS_DIR_BONUS)/,$(SRCS:.c=.o))

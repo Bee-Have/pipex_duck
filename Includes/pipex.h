@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/02/03 13:38:30 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/04 19:04:15 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ int		parsing_files(int ac, char **av);
 # ifndef BONUS
 
 int		fork_manager(int files[2], char **cmds, char *env[]);
-int		fork_cmds(pid_t *child, int files[2], char **cmds, char *env[]);
+void	fork_cmds(pid_t *child, int files[2], char **cmds, char *env[]);
 
 # else
 
 int		fork_manager(int files[3], char ***cmds, char *env[]);
-int		fork_cmds(pid_t *child, int files[3], char ***cmds, char *env[]);
+void	fork_cmds(pid_t *child, int files[3], char ***cmds, char *env[]);
 
 # endif
 
@@ -71,29 +71,33 @@ char	**get_possible_paths(char *env[]);
 //FORK DUP
 # ifndef BONUS
 
-void	dup2_children(int index, int pipefd[2], int files[2]);
+void	dup2_child(int index, int pipefd[2], int files[2]);
 
 # else
 
-void	dup2_children(int max, int index, int pipefd[2], int files[3]);
+void	dup2_child(int max, int index, int pipefd[2], int files[3]);
 void	transit_pipe(int i, int pipefd[2], int pipehd[2], int files[3]);
 
 # endif
 
+void	tmp_pipe(int std);
 void	dup_close_fd(int fd, int std);
 
 //
-//FORK UTILS
+//HERE_DOC
 # ifdef BONUS
 
-char	**get_lines_limiter(char *limiter, int cmd_len);
-char	*make_here_doc_prefix(int cmd_len);
+char	**get_lines_limiter(char *limiter);
 void	write_here_doc_file(int stdin, char **here_doc);
 void	here_doc_manager(char	***cmds, int (*pipehd)[2]);
 
 # endif
 
+//
+//FORK UTILS
+void	exit_child(pid_t *children, int ret);
 int		wait_for_children(pid_t *children, int size);
+
 //
 //ERRORS
 int		error_manager(int erno, char *str);

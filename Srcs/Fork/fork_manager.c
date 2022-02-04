@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:19:52 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/04 16:10:44 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/04 18:48:02 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,36 +26,30 @@ int	fork_manager(int files[2], char **cmds, char *env[])
 		return (EXIT_FAILURE);
 	fork_cmds(child, files, cmds, env);
 	wait_ret = wait_for_children(child, len_cmds);
-	if (wait_ret == 32512)
+	if (wait_ret == 32512 && files[1] != -1)
 		return (127);
+	if (wait_ret != 0)
+		wait_ret = EXIT_FAILURE;
 	return (wait_ret);
 }
 
-int	fork_cmds(pid_t *child, int files[2], char **cmds, char *env[])
+void	fork_cmds(pid_t *child, int files[2], char **cmds, char *env[])
 {
 	int		i;
 	int		pipefd[2];
-	int		ret;
-	char	**cmd_args;
 
 	i = 0;
 	pipe(pipefd);
-	ret = EXIT_SUCCESS;
 	while (i < ft_tablen((const char **)cmds))
 	{
 		child[i] = fork();
 		if (child[i] == 0)
 		{
-			dup2_children(i, pipefd, files);
-			cmd_args = get_cmd_args(cmds[i]);
-			ret = check_cmd_env(cmd_args, env);
-			if (ret != PATH_OK)
-			{
-				ft_freetab(cmd_args);
-				free(child);
-				ret = 127;
-				exit(127);
-			}
+			if (i == ft_tablen((const char **)cmds) - 1 && files[1] == -1)
+				exit_child(child, EXIT_FAILURE);
+			dup2_child(i, pipefd, files);
+			if (check_cmd_env(get_cmd_args(cmds[i]), env) != PATH_OK)
+				exit_child(child, 127);
 		}
 		else if (child[i] != 0 && i == 0)
 			close(files[0]);
@@ -63,7 +57,6 @@ int	fork_cmds(pid_t *child, int files[2], char **cmds, char *env[])
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);
-	return (ret);
 }
 
 #else
@@ -82,7 +75,7 @@ int	fork_manager(int files[3], char ***cmds, char *env[])
 		return (EXIT_FAILURE);
 	fork_cmds(child, files, cmds, env);
 	wait_ret = wait_for_children(child, len_cmds);
-	if (wait_ret == 32512)
+	if (wait_ret == 32512 && files[1] != -1)
 		return (127);
 	if (wait_ret != 0)
 		wait_ret = EXIT_FAILURE;
@@ -90,42 +83,33 @@ int	fork_manager(int files[3], char ***cmds, char *env[])
 }
 
 //here : file[0]=infile | file[1]=outfile | file[2]=stdin
-int	fork_cmds(pid_t *child, int files[3], char ***cmds, char *env[])
+//here : pipes[0][2] -> pipes fork | pipes[1][2] -> pipes here_doc
+void	fork_cmds(pid_t *child, int files[3], char ***cmds, char *env[])
 {
 	int		i;
-	int		ret;
-	int		pipefd[2];
-	int		pipehd[2];
-	char	**cmd_args;
+	int		pipes[2][2];
 
 	i = 0;
-	ret = EXIT_SUCCESS;
 	while (i < ft_tablen((const char **)*cmds))
 	{
-		pipe(pipefd);
+		pipe(pipes[0]);
 		if (i == 0 && files[0] == NO_INFILE)
-			here_doc_manager(cmds, &pipehd);
+			here_doc_manager(cmds, &(pipes[1]));
 		child[i] = fork();
 		if (child[i] == 0)
 		{
+			if (i == ft_tablen((const char **)*cmds) - 1 && files[1] == -1)
+				exit_child(child, EXIT_FAILURE);
 			if (files[0] == NO_INFILE)
-				dup_close_fd(pipehd[0], 0);
-			dup2_children(ft_tablen((const char **)*cmds), i, pipefd, files);
-			cmd_args = get_cmd_args((*cmds)[i]);
-			ret = check_cmd_env(cmd_args, env);
-			if (ret != PATH_OK)
-			{
-				ft_freetab(cmd_args);
-				free(child);
-				ret = 127;
-				exit(127);
-			}
+				dup_close_fd(pipes[1][0], 0);
+			dup2_child(ft_tablen((const char **)*cmds) - 1, i, pipes[0], files);
+			if (check_cmd_env(get_cmd_args((*cmds)[i]), env) != PATH_OK)
+				exit_child(child, 127);
 		}
 		else
-			transit_pipe(i, pipefd, pipehd, files);
+			transit_pipe(i, pipes[0], pipes[1], files);
 		++i;
 	}
-	return (ret);
 }
 
 #endif
