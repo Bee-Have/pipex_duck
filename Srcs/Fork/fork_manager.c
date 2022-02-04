@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:19:52 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/03 17:11:16 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:10:44 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	fork_manager(int files[3], char ***cmds, char *env[])
 	wait_ret = wait_for_children(child, len_cmds);
 	if (wait_ret == 32512)
 		return (127);
+	if (wait_ret != 0)
+		wait_ret = EXIT_FAILURE;
 	return (wait_ret);
 }
 
