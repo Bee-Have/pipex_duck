@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:40:09 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/04 18:16:16 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:06:42 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**get_cmd_args(char *cmd)
 
 	if (!cmd)
 	{
-		error_manager(ERNO_EMPTY_CMD, NULL);
+		error_manager(ERNO_PATH, NULL);
 		return (NULL);
 	}
 	args = ft_split(cmd, ' ');
@@ -34,8 +34,10 @@ int	check_cmd_env(char **cmd, char *env[])
 	i = 0;
 	if (access(cmd[0], X_OK) == 0)
 		execve(cmd[0], cmd, env);
+	else if (access(cmd[0], F_OK) == 0 && access(cmd[0], X_OK) == -1)
+		return (exit_bad_cmd(ERNO_PERMISSION, cmd, NULL));
 	paths_tab = get_possible_paths(env);
-	while (paths_tab[i])
+	while (cmd[0] && paths_tab[i])
 	{
 		path = ft_strjoin(paths_tab[i], cmd[0]);
 		if (access(path, X_OK) == 0)
@@ -48,10 +50,7 @@ int	check_cmd_env(char **cmd, char *env[])
 		free(path);
 		++i;
 	}
-	ft_freetab(paths_tab);
-	i = error_manager(ERNO_PATH, cmd[0]);
-	ft_freetab(cmd);
-	return (i);
+	return (exit_bad_cmd(ERNO_PATH, cmd, paths_tab));
 }
 
 char	**get_possible_paths(char *env[])
@@ -76,4 +75,14 @@ char	**get_possible_paths(char *env[])
 	free(tmp);
 	free(all_paths);
 	return (paths_tab);
+}
+
+int	exit_bad_cmd(int erno, char **cmd, char **paths)
+{
+	int	ret;
+
+	ret = error_manager(erno, cmd[0]);
+	ft_freetab(cmd);
+	ft_freetab(paths);
+	return (ret);
 }

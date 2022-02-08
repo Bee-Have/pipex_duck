@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 13:50:36 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/04 19:10:55 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:53:28 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,18 @@
 int	main(int ac, char **av, char *env[])
 {
 	int		files[2];
-	int		i;
 	char	**cmds;
 	int		ret;
 
-	i = 0;
+	if (parsing_args(ac, av) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
 	if (parsing_manager(ac, av) != EXIT_SUCCESS)
 		ret = 0;
 	files[0] = open(av[1], O_RDONLY);
-	files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_TRUNC, 0777);
-	cmds = (char **)malloc(((ac - 3) + 1) * sizeof(char *));
-	if (!cmds)
-		return (EXIT_FAILURE);
-	cmds[ac - 3] = NULL;
-	while (i < (ac - 3))
-	{
-		cmds[i] = ft_strdup(av[i + 2]);
-		++i;
-	}
+	files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (files[1] == -1)
+		error_manager(ERNO_FILE, av[ac - 1]);
+	cmds = make_av_cmds(ac, av);
 	ret = fork_manager(files, cmds, env);
 	ft_freetab(cmds);
 	close(files[0]);
@@ -51,17 +45,21 @@ int	main(int ac, char **av, char *env[])
 	int		files[3];
 	char	**cmds;
 
+	if (parsing_args(ac, av) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
 	files[0] = NO_INFILE;
 	files[2] = dup(STDIN_FILENO);
 	if (parsing_manager(ac, av) == EXIT_FAILURE)
 		ret = 0;
 	if (ft_strcmp(av[1], "here_doc") == 0)
-		files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_APPEND, 0777);
+		files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_APPEND, 0644);
 	else
 	{
 		files[0] = open(av[1], O_RDONLY);
-		files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_TRUNC, 0777);
+		files[1] = open(av[ac - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
 	}
+	if (files[1] == -1)
+		error_manager(ERNO_FILE, av[ac - 1]);
 	cmds = make_av_cmds(ac, av);
 	ret = fork_manager(files, &cmds, env);
 	ft_freetab(cmds);
@@ -69,6 +67,8 @@ int	main(int ac, char **av, char *env[])
 	close(files[2]);
 	return (ret);
 }
+
+#endif
 
 char	**make_av_cmds(int ac, char **av)
 {
@@ -89,5 +89,3 @@ char	**make_av_cmds(int ac, char **av)
 	}
 	return (cmds);
 }
-
-#endif

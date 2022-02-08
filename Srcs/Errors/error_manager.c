@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 18:31:41 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/04 16:29:37 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/08 15:47:11 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int	error_manager(int erno, char *str)
 	char		*error;
 
 	err = 2;
-	if (erno == ERNO_INFILE || erno == ERNO_EMPTY_CMD
-		|| erno == ERNO_PATH || erno == ERNO_PERMISSION)
+	if (erno == ERNO_FILE || erno == ERNO_PATH || erno == ERNO_PERMISSION)
 		msg = get_error_misc(erno, str, &err);
 	else if (erno == ERNO_NAME || erno == ERNO_NO_ARGS
 		|| erno == ERNO_ARGS_NBR_LESS || erno == ERNO_ARGS_NBR_MORE

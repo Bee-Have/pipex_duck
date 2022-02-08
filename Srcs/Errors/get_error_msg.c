@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 14:40:21 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/04 16:28:48 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/08 15:47:11 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,19 @@ char	*get_error_misc(int erno, char *str, int *err)
 	char	*tmp;
 	char	*error;
 
-	if (erno == ERNO_INFILE)
+	if (erno == ERNO_FILE)
 		error = ft_strdup(": No such file or directory");
 	else if (erno == ERNO_PERMISSION)
-		error = ft_strdup(": Permission denied");
-	else if (erno == ERNO_EMPTY_CMD || erno == ERNO_PATH)
 	{
-		if (erno == ERNO_EMPTY_CMD)
-			error = ft_strdup("Command is empty, enter existing command");
-		else
-		{
-			tmp = ft_strjoin("Command \'", str);
-			error = ft_strjoin(tmp, "\' not found");
-			free(tmp);
-			res = ft_strdup(error);
-		}
+		error = ft_strdup(": Permission denied");
+		*err = 126;
+	}
+	else if (erno == ERNO_PATH)
+	{
+		tmp = ft_strjoin("Command \'", str);
+		error = ft_strjoin(tmp, "\' not found");
+		free(tmp);
+		res = ft_strdup(error);
 		*err = 127;
 	}
 	if (erno != ERNO_PATH)

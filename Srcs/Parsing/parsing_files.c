@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:13:18 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/04 16:16:27 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/08 15:47:11 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	parsing_files(int ac, char **av)
 
 	ret_infile[0] = access(av[1], F_OK);
 	if (ret_infile[0] == -1)
-		error_manager(ERNO_INFILE, av[1]);
+		error_manager(ERNO_FILE, av[1]);
 	ret_infile[1] = access(av[1], R_OK);
 	if (ret_infile[0] != -1 && ret_infile[1] == -1)
 		error_manager(ERNO_PERMISSION, av[1]);
@@ -54,7 +54,7 @@ int	parsing_files(int ac, char **av)
 	{
 		ret_infile[0] = access(av[1], F_OK);
 		if (ret_infile[0] == -1)
-			error_manager(ERNO_INFILE, av[1]);
+			error_manager(ERNO_FILE, av[1]);
 		ret_infile[1] = access(av[1], R_OK);
 		if (ret_infile[0] != -1 && ret_infile[1] == -1)
 			error_manager(ERNO_PERMISSION, av[1]);

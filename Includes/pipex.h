@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:15:21 by user42            #+#    #+#             */
-/*   Updated: 2022/02/04 19:04:15 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:38:25 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,18 @@
 # define NO_INFILE -2
 
 # define ERNO_NAME 1
-# define ERNO_INFILE 2
+# define ERNO_FILE 2
 # define ERNO_PERMISSION 3
 # define ERNO_NO_ARGS 4
 # define ERNO_ARGS_NBR_LESS 5
 # define ERNO_ARGS_NBR_MORE 6
 # define ERNO_ARGS_NO_BONUS 7
-# define ERNO_EMPTY_CMD 8
-# define ERNO_PATH 9
+# define ERNO_PATH 8
 
 //MAIN
 int		main(int ac, char **av, char *env[]);
-
-# ifdef BONUS
-
 char	**make_av_cmds(int ac, char **av);
-# endif
+
 //
 //PARSING
 int		parsing_manager(int ac, char **av);
@@ -67,15 +63,17 @@ void	fork_cmds(pid_t *child, int files[3], char ***cmds, char *env[]);
 char	**get_cmd_args(char *cmd);
 int		check_cmd_env(char **cmd, char *env[]);
 char	**get_possible_paths(char *env[]);
+int		exit_bad_cmd(int erno, char **cmd, char **paths);
+
 //
 //FORK DUP
 # ifndef BONUS
 
-void	dup2_child(int index, int pipefd[2], int files[2]);
+void	dupchild(int index, int pipefd[2], int files[2]);
 
 # else
 
-void	dup2_child(int max, int index, int pipefd[2], int files[3]);
+void	dupchild(int max, int index, int pipefd[2], int files[3]);
 void	transit_pipe(int i, int pipefd[2], int pipehd[2], int files[3]);
 
 # endif

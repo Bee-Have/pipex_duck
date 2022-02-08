@@ -6,7 +6,7 @@
 /*   By: amarini- <amarini-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 14:33:24 by amarini-          #+#    #+#             */
-/*   Updated: 2022/02/04 16:44:11 by amarini-         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:38:25 by amarini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #ifndef BONUS
 
-void	dup2_child(int index, int pipefd[2], int files[2])
+void	dupchild(int index, int pipefd[2], int files[2])
 {
 	if (index == 0)
 	{
@@ -40,7 +40,7 @@ void	dup2_child(int index, int pipefd[2], int files[2])
 #else
 
 //here : file[0]=infile | file[1]=outfile | file[2]=stdin
-void	dup2_child(int max, int index, int pipefd[2], int files[3])
+void	dupchild(int max, int index, int pipefd[2], int files[3])
 {
 	if (index == 0)
 	{
